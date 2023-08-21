@@ -24,4 +24,6 @@ private:
 
 } // namespace concurrency
 
+#include "inl/blocking_map.hxx"
+
 #endif // BLOCKING_MAP_HPP
