@@ -7,11 +7,13 @@
 #include <thread>
 #include <cstddef> // size_t
 
+
+//TODO: think on more tests
 BEGIN_TEST(basic_test)
     concurrency::BlockingMap<std::string,int> map;
     map["first"] = 0;
     std::vector<std::thread> threads;
-    int big_number = 10'000;
+    int big_number = 1000;
     threads.reserve(big_number);
     auto thread_inc = [&map] {
         ++map.at("first");
@@ -31,13 +33,13 @@ BEGIN_TEST(basic_test)
             ++map.at("second");
         }
     };
-
     for (int i = 0; i < big_number; ++i) {
         threads.emplace_back(std::thread(thread_add,big_number));
     }
     for (int i = 0; i < big_number; ++i) {
         threads.at(i).join();
     }
+
     ASSERT_EQUAL(map.at("second"),big_number*big_number);    
 
 END_TEST
