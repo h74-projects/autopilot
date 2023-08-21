@@ -7,7 +7,7 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR) -I$(SOURCES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o udp_server.o udp_client.o
+OBJS = utest.o tcp_client.o tcp_server.o
 TARGET = utest
 
 all: $(TARGET)
@@ -15,14 +15,14 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET) -lpthread
 
-utest.o: utest.cpp $(INCLUDES_DIR)/udp_server.hpp $(INCLUDES_DIR)/udp_client.hpp $(INCLUDES_DIR)/mu_test.h
+utest.o: utest.cpp $(INCLUDES_DIR)/tcp_client.hpp $(INCLUDES_DIR)/tcp_server.hpp $(INCLUDES_DIR)/mu_test.h
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c utest.cpp -o utest.o
 
-udp_server.o: $(SOURCES_DIR)/udp_server.cpp $(INCLUDES_DIR)/udp_server.hpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(SOURCES_DIR)/udp_server.cpp -o udp_server.o
+tcp_client.o: $(SOURCES_DIR)/tcp_client.cpp $(INCLUDES_DIR)/tcp_client.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(SOURCES_DIR)/tcp_client.cpp -o tcp_client.o
 
-udp_client.o: $(SOURCES_DIR)/udp_client.cpp $(INCLUDES_DIR)/udp_client.hpp
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(SOURCES_DIR)/udp_client.cpp -o udp_client.o
+tcp_server.o: $(SOURCES_DIR)/tcp_server.cpp $(INCLUDES_DIR)/tcp_server.hpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(SOURCES_DIR)/tcp_server.cpp -o tcp_server.o
 
 check: $(TARGET)
 	@./$(TARGET) -v
