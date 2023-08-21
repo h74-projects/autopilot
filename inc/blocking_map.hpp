@@ -18,11 +18,13 @@ public:
 
     V const& at(K const& a_key) const;
 
-    void insert(K const& a_key, V const& a_value);
+    void write(K const& a_key, V const& a_value);
 
 private:
     std::unordered_map<K, V> m_map;
-    std::condition_variable m_cv;
+    //TODO: decide if necessary
+    //std::condition_variable m_cv;
+    
     std::mutex m_mtx;
 };
 
