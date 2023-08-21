@@ -7,7 +7,7 @@
 
 namespace concurrency {
 
-template<typename T, typename U>
+template<typename K, typename V>
 class BlockingMap {
 public:
     BlockingMap() = default;
@@ -16,8 +16,12 @@ public:
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
 
+    V const& at(K const& a_key) const;
+
+    void insert(K const& a_key, V const& a_value);
+
 private:
-    std::unordered_map<T, U> m_map;
+    std::unordered_map<K, V> m_map;
     std::condition_variable m_cv;
     std::mutex m_mtx;
 };
