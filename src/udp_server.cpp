@@ -4,10 +4,10 @@
 
 #include "udp_server.hpp"
 
-UDPServer::UDPServer(boost::asio::io_context& io_context, std::string a_ip, int32_t a_port)
+UDPServer::UDPServer(boost::asio::io_context& io_context, std::string const& a_ip, int32_t a_port)
 : m_socket(io_context, udp::endpoint(udp::v4(), a_port))
 , m_listening(false) 
-, m_ip(std::move(a_ip))
+, m_ip(a_ip)
 {
 }
 
