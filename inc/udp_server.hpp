@@ -1,22 +1,28 @@
 #ifndef UDP_HPP
 #define UDP_HPP
 
+#include <boost/asio.hpp>
 #include <functional>
+
+using boost::asio::ip::udp;
 
 class UDPServer {
 public:
-    UDPServer(std::string a_ip, uint32_t a_port);
+    UDPServer(boost::asio::io_context& io_context, std::string a_ip, int32_t a_port);
     ~UDPServer();
 
-    bool initialize_server();
-    void start_listening(std::function<void(std::string, ssize_t)> a_callback);
+    void start_listening(std::function<void(const std::string&, ssize_t)> a_callback);
     void stop_listening();
 
 private:
-    std::string m_ip;
-    uint32_t m_port;
-    uint32_t m_sockfd;
+    void do_receive();
+    
+    udp::socket m_socket;
+    udp::endpoint m_sender_endpoint;
+    char m_recv_buffer[1024];
+    std::function<void(const std::string&, ssize_t)> m_callback;
     bool m_listening;
+    std::string m_ip;
 };
 
 #endif // UDP_HPP
