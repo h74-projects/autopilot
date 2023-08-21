@@ -8,10 +8,10 @@ using boost::asio::ip::udp;
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context& io_context, std::string a_ip, int32_t a_port);
+    UDPServer(boost::asio::io_context& io_context, std::string const& a_ip, int32_t a_port);
     ~UDPServer();
 
-    void start_listening(std::function<void(const std::string&, ssize_t)> a_callback);
+    void start_listening(std::function<void(std::string const&, ssize_t)> a_callback);
     void stop_listening();
 
 private:
@@ -20,7 +20,7 @@ private:
     udp::socket m_socket;
     udp::endpoint m_sender_endpoint;
     char m_recv_buffer[1024];
-    std::function<void(const std::string&, ssize_t)> m_callback;
+    std::function<void(std::string const&, ssize_t)> m_callback;
     bool m_listening;
     std::string m_ip;
 };
