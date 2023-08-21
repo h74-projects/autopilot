@@ -20,6 +20,8 @@ public:
 
     void write(K const& a_key, V const& a_value);
 
+    bool contains(K const& a_key) const noexcept;
+
 private:
     std::unordered_map<K, V> m_map;
     //TODO: decide if necessary
