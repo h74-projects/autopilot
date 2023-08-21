@@ -4,6 +4,7 @@
 #include <unordered_map> // map
 #include <mutex> // mutex
 #include <condition_variable> // conditional variables
+#include <atomic> // atomic
 
 namespace concurrency {
 
@@ -16,14 +17,17 @@ public:
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
 
-    V const& at(K const& a_key) const;
+    std::atomic<V>& at(K const& a_key) const;
 
-    void write(K const& a_key, V const& a_value);
+    std::atomic<V>& operator[](K const& a_key);
+
+    //TODO: maybe
+    V read(K const& a_key) const;
 
     bool contains(K const& a_key) const noexcept;
 
 private:
-    std::unordered_map<K, V> m_map;
+    std::unordered_map<K, std::atomic<V>> m_map;
     //TODO: decide if necessary
     //std::condition_variable m_cv;
     
