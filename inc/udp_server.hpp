@@ -4,6 +4,8 @@
 #include <boost/asio.hpp>
 #include <functional>
 
+namespace communication { 
+
 using boost::asio::ip::udp;
 
 class UDPServer {
@@ -24,5 +26,7 @@ private:
     bool m_listening;
     std::string m_ip;
 };
+
+} //namespace communication 
 
 #endif // UDP_HPP

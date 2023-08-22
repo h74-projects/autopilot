@@ -4,6 +4,8 @@
 
 #include "udp_server.hpp"
 
+namespace communication { 
+
 UDPServer::UDPServer(boost::asio::io_context& io_context, std::string const& a_ip, int32_t a_port)
 : m_socket(io_context, udp::endpoint(udp::v4(), a_port))
 , m_listening(false) 
@@ -43,3 +45,5 @@ void UDPServer::stop_listening()
         m_socket.close();
     }
 }
+
+} //namespace communication  
