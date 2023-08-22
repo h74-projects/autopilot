@@ -17,10 +17,10 @@ public:
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
 
-    std::atomic<V>& at(K const& a_key);
-    std::atomic<V> const& at(K const& a_key) const;
+    V& at(K const& a_key);
+    V const& at(K const& a_key) const;
 
-    std::atomic<V>& operator[](K const& a_key);
+    V& operator[](K const& a_key);
 
     //TODO: maybe
     V read(K const& a_key) const;
@@ -28,7 +28,7 @@ public:
     bool contains(K const& a_key) const noexcept;
 
 private:
-    std::unordered_map<K, std::atomic<V>> m_map;
+    std::unordered_map<K, V> m_map;
     //TODO: decide if necessary
     //std::condition_variable m_cv;
     
