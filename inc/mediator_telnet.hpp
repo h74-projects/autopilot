@@ -8,6 +8,7 @@
 
 #include <memory> // shared ptr
 #include <cstdint> // int32_t
+#include <mutex> // mutex
 
 namespace fgear {
 
@@ -25,7 +26,7 @@ private:
     std::unordered_map<std::string, std::string> m_proeperties;
     //TODO: in the future abstract Client class
     TCPClient m_client;
-    
+    std::mutex m_mtx;    
 };
 
 } // namespace fgear
