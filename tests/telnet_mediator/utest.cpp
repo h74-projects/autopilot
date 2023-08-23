@@ -4,18 +4,15 @@
 using namespace fgear;
 
 BEGIN_TEST(basic_test)
-    try {
+    // try {
         TelnetMediator mediator{"127.0.0.1", 5401};
-        mediator.set("alieron", -1.0);
-        sleep(1);
-        mediator.set("alieron", 1.0);
-        sleep(1);
+        mediator.set("aileron", -1.0);
+        mediator.set("aileron", 1.0);
         mediator.set("rudder", 1.0);
-        sleep(1);
         mediator.set("rudder", -1.0);
-    } catch (...) {
-        ASSERT_FAIL("\nYou fucked up\n");
-    }
+    // } catch (...) {
+    //     ASSERT_FAIL("\nYou fucked up\n");
+    // }
     ASSERT_PASS();
 
 END_TEST
