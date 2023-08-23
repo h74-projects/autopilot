@@ -69,11 +69,9 @@ TelnetClient::TelnetClient(std::string const& a_address, uint32_t const& a_port,
     }
 
     // first write trial
-    try {
-        send("data");
-    } catch (...) {
+    if (send("data") < 4) {
         close(m_socket);
-        throw;
+        throw std::runtime_error("could not connect to telnet");
     }
 }
 
@@ -94,19 +92,18 @@ std::string TelnetClient::read()
     char buffer[BUFFER_SIZE];
     ssize_t len = ::read(m_socket, buffer, BUFFER_SIZE - 1);
     if (len < 0) {
-            throw std::runtime_error("can't read");
+        throw std::runtime_error("can't read");
     }
     else if (len > 0) {
-        std::string result{buffer,len};
+        std::string result{buffer,static_cast<size_t>(len)};
         size_t last_valid = result.find_last_not_of("\r\n");
         if (last_valid != std::string::npos) {
             result.erase(last_valid + 1);
         }
         return result;
     }
-
     throw std::runtime_error("can't read");
-
+    
 }
 
 void TelnetClient::set_timeout(uint32_t const& a_time)
