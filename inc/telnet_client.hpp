@@ -12,7 +12,7 @@ public:
     TelnetClient(std::string const& a_address, uint32_t a_port);
     ~TelnetClient();
 
-    int send(std::string const& a_msg);
+    int32_t send(std::string const& a_msg);
     std::string read(void);
 
 private:
