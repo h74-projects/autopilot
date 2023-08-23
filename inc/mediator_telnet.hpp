@@ -32,7 +32,8 @@ public:
 
 private:
     std::string make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command);
-
+    void fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>>& a_variables);
+    
 private:
     //TODO: instead of string key we need some variable type enum
     //tuple order <property, typename, Var>

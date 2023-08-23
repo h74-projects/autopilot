@@ -28,7 +28,7 @@ clean:
 	@$(RM) $(TARGET) $(OBJS)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET) -lpthread
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET) -lpthread -lpugixml
 
 utest.o: $(INCLUDES_DIR)/mu_test.h
 
