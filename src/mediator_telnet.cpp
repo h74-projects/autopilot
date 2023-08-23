@@ -4,7 +4,7 @@
 
 #include "pugixml.hpp"
 
-constexpr uint32_t TIME_OUT = 30;
+constexpr uint32_t TIME_OUT = 500;
 
 namespace fgear {
 
@@ -52,7 +52,7 @@ void TelnetMediator::fill_map(std::string const& a_filename, concurrency::Blocki
         throw std::runtime_error("failed to load");
     }
     
-    for (pugi::xpath_node chunk_node : doc.select_nodes("/root/chunk")) {
+    for (pugi::xpath_node chunk_node : doc.select_nodes("/PropertyList/chunk")) {
         pugi::xml_node node = chunk_node.node();
         std::string name = node.child_value("name");
         std::string type = node.child_value("type");
