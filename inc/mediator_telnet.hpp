@@ -12,8 +12,7 @@
 #include "mediator.hpp"
 #include "blocking_map.hpp"
 #include "var.hpp"
-#include "tcp_client.hpp"
-#include "udp_server.hpp"
+#include "telnet_client.hpp"
 
 #include <memory> // shared ptr
 #include <cstdint> // int32_t
@@ -24,22 +23,22 @@ namespace fgear {
 
 class TelnetMediator : public Mediator {
 public:
-    TelnetMediator(boost::asio::io_context& io_context, const std::string& server_ip, int32_t server_port);
-    ~TelnetMediator();
+    TelnetMediator(std::string const & a_server_ip, uint32_t const& a_server_port);
+    ~TelnetMediator() = default;
 
     void set(std::string const& a_key ,Var const& a_var) override;
 
-    Var get(std::string const& a_key) override;
+    //Var get(std::string const& a_key) override;
 
 private:
-    std::string make_set_command(std::string const& a_key ,Var const& a_var);
+    std::string make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command);
 
 private:
     //TODO: instead of string key we need some variable type enum
     //tuple order <property, typename, Var>
     concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>> m_variables;
+    TelnetClient m_telnet;
     //TODO: in the future abstract Client class
-    TCPClient m_client;
     std::mutex m_mtx;    
 };
 
