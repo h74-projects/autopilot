@@ -3,6 +3,13 @@
 namespace concurrency {
 
 template<typename K, typename V>
+BlockingMap<K, V>::BlockingMap(BlockingMap const& a_map)
+{
+    std::unique_lock lock(a_map.m_mtx);
+    m_map = a_map.m_map;
+}
+
+template<typename K, typename V>
 V& BlockingMap<K, V>::at(K const& a_key)
 {
     std::unique_lock lock(m_mtx);

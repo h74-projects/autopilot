@@ -14,6 +14,8 @@ public:
     BlockingMap() = default;
     ~BlockingMap() = default;
 
+    BlockingMap(BlockingMap const& a_map);
+
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
 
