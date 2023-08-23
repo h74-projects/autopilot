@@ -83,7 +83,9 @@ TelnetClient::~TelnetClient()
 
 ssize_t TelnetClient::send(std::string const& a_msg)
 {
-    return ::write(m_socket, a_msg.c_str(), a_msg.size());
+    std::string to_be_sent{a_msg};
+    to_be_sent += "\015\012";
+    return ::write(m_socket, to_be_sent.c_str(), to_be_sent.size());
 }
 
 
