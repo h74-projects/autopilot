@@ -9,11 +9,14 @@ namespace fgear {
 class TelnetClient {
 
 public:
-    TelnetClient(std::string const& a_address, uint32_t a_port);
+    TelnetClient(std::string const& a_address, uint32_t const& a_port, uint32_t const& a_time_out);
     ~TelnetClient();
 
     int32_t send(std::string const& a_msg);
     std::string read(void);
+
+    //in milliseconds
+    void set_timeout(uint32_t const& a_time);
 
 private:
     int close(void);

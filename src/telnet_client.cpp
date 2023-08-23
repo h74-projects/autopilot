@@ -10,23 +10,25 @@
 #include <exception> // exception
 #include <stdexcept> // std exceptions
 
+//time for waiting on socket in milliseconds
+
 namespace fgear {
 
 namespace {
 
-bool unblock_socket(int32_t const& a_socket)
-{
-    int flags = fcntl(a_socket,F_GETFL);
-    if(flags  == -1)
-    {
-        return false;
-    }
-    if((fcntl(a_socket,F_SETFL,flags | O_NONBLOCK)) == -1)
-    {
-        return false;
-    }
-    return true;    
-}  
+// bool unblock_socket(int32_t const& a_socket)
+// {
+//     int flags = fcntl(a_socket,F_GETFL);
+//     if(flags  == -1)
+//     {
+//         return false;
+//     }
+//     if((fcntl(a_socket,F_SETFL,flags | O_NONBLOCK)) == -1)
+//     {
+//         return false;
+//     }
+//     return true;    
+// }  
 
 bool connect_to_telnet(int32_t const& a_socket, std::string const& a_address, uint32_t a_port)
 {
@@ -48,18 +50,20 @@ bool connect_to_telnet(int32_t const& a_socket, std::string const& a_address, ui
 
 } // namespace
 
-TelnetClient::TelnetClient(std::string const& a_address, uint32_t a_port)
+TelnetClient::TelnetClient(std::string const& a_address, uint32_t const& a_port, uint32_t const& a_time_out)
 : m_socket(-1)
 , m_connected(false)
-, m_timeout(1)
+, m_timeout(a_time_out)
 {
     m_socket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (m_socket < 0) {
         throw std::runtime_error("could not open socket");
     }
-    if (not unblock_socket(m_socket)) {
-        throw std::runtime_error("could not unblock socket");
-    }
+    // if (not unblock_socket(m_socket)) {
+    //     throw std::runtime_error("could not unblock socket");
+    // }
+    set_timeout(m_timeout);
+    
     if (not connect_to_telnet(m_socket, a_address, a_port)) {
         close();
         throw std::runtime_error("could not connect to telnet");
@@ -76,6 +80,21 @@ TelnetClient::TelnetClient(std::string const& a_address, uint32_t a_port)
 }
 
 
+void TelnetClient::set_timeout(uint32_t const& a_time)
+{
+    m_timeout = a_time;
+
+    struct timeval read_timeout;
+    read_timeout.tv_sec = 0; 
+    read_timeout.tv_usec = a_time * 1000;
+    setsockopt(m_socket, SOL_SOCKET, SO_RCVTIMEO, &read_timeout, sizeof(read_timeout));
+
+    struct timeval write_timeout;
+    write_timeout.tv_sec = 0; 
+    write_timeout.tv_usec = a_time * 1000;
+    setsockopt(m_socket, SOL_SOCKET, SO_SNDTIMEO, &write_timeout, sizeof(write_timeout));
+
+}
 
 
 } // namespace fgear
