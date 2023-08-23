@@ -29,7 +29,7 @@ BEGIN_TEST(udp_communication_test)
     });
 
     // Create and use the UDP client
-    UDPClient udpClient(io_context, "127.0.0.1", serverPort);
+    fgear::UDPClient udpClient(io_context, "127.0.0.1", serverPort);
 
     std::string testData = "Hello, UDP Server!";
     std::string receivedData;

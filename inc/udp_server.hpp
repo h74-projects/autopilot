@@ -10,7 +10,7 @@ using boost::asio::ip::udp;
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context& io_context, std::string const& a_ip, int32_t a_port);
+    UDPServer(boost::asio::io_context& a_io_context, std::string const& a_ip, int32_t a_port);
     ~UDPServer();
 
     void start_listening(std::function<void(std::string const&, ssize_t)> a_callback);

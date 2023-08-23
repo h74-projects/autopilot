@@ -1,5 +1,7 @@
 #include "tcp_client.hpp"
 
+namespace fgear {
+
 TCPClient::TCPClient(boost::asio::io_context& io_context, std::string const& server_ip, int32_t server_port)
 : m_io_context(io_context)
 , m_socket(io_context)
@@ -45,3 +47,5 @@ void TCPClient::close()
         m_socket.close();
     }
 }
+
+} // namespace fgear

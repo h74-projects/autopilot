@@ -4,6 +4,10 @@
 #include <boost/asio.hpp>
 #include <functional>
 
+namespace fgear {
+
+
+
 class UDPClient {
 public:
     UDPClient(boost::asio::io_context& io_context, const std::string& server_ip, int32_t server_port);
@@ -21,5 +25,7 @@ private:
     char m_recv_buffer[1024];
     std::function<void(const std::string&, ssize_t)> m_receive_callback;
 };
+
+} // namespace fgear
 
 #endif // UDP_CLIENT_HPP

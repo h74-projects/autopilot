@@ -1,5 +1,7 @@
 #include "udp_client.hpp"
 
+namespace fgear {
+
 UDPClient::UDPClient(boost::asio::io_context& io_context, const std::string& server_ip, int32_t server_port)
     : m_io_context(io_context),
       m_socket(io_context, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), 0)),
@@ -25,3 +27,5 @@ void UDPClient::do_receive() {
             }
         });
 }
+
+} // namespace fgear

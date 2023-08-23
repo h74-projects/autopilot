@@ -5,9 +5,14 @@
 #include <functional>
 #include <iostream>
 
+
+namespace fgear {
+
+
+
 class TCPClient {
 public:
-    TCPClient(boost::asio::io_context& io_context, const std::string& server_ip, int32_t server_port);
+    TCPClient(boost::asio::io_context& a_io_context, const std::string& a_server_ip, int32_t a_server_port);
     ~TCPClient();
 
     void connect();
@@ -24,5 +29,7 @@ private:
     char m_recv_buffer[1024];
     std::function<void(const std::string&, ssize_t)> m_receive_callback;
 };
+
+} // namespace fgear
 
 #endif // TCP_CLIENT_HPP
