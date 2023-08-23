@@ -13,7 +13,7 @@ public:
 
     virtual void set(std::string const& a_key ,Var const& a_var) = 0;
 
-    virtual Var get(std::string const& a_key) = 0; 
+    //virtual Var get(std::string const& a_key) = 0; 
 
 protected:
     Mediator() = default;
