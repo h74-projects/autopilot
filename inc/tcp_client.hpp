@@ -1,0 +1,28 @@
+#ifndef TCP_CLIENT_HPP
+#define TCP_CLIENT_HPP
+
+#include <boost/asio.hpp>
+#include <functional>
+#include <iostream>
+
+class TCPClient {
+public:
+    TCPClient(boost::asio::io_context& io_context, const std::string& server_ip, int32_t server_port);
+    ~TCPClient();
+
+    void connect();
+    void send(const std::string& data);
+    void receive(std::function<void(const std::string&, ssize_t)> callback);
+    void close();
+
+private:
+    void do_receive();
+
+    boost::asio::io_context& m_io_context;
+    boost::asio::ip::tcp::socket m_socket;
+    boost::asio::ip::tcp::endpoint m_server_endpoint;
+    char m_recv_buffer[1024];
+    std::function<void(const std::string&, ssize_t)> m_receive_callback;
+};
+
+#endif // TCP_CLIENT_HPP
