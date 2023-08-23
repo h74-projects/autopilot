@@ -10,9 +10,9 @@
 #include <exception> // exception
 #include <stdexcept> // std exceptions
 
-//time for waiting on socket in milliseconds
-
 namespace fgear {
+
+constexpr uint32_t BUFFER_SIZE = 1024;
 
 namespace {
 
@@ -52,7 +52,6 @@ bool connect_to_telnet(int32_t const& a_socket, std::string const& a_address, ui
 
 TelnetClient::TelnetClient(std::string const& a_address, uint32_t const& a_port, uint32_t const& a_time_out)
 : m_socket(-1)
-, m_connected(false)
 , m_timeout(a_time_out)
 {
     m_socket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -63,22 +62,52 @@ TelnetClient::TelnetClient(std::string const& a_address, uint32_t const& a_port,
     //     throw std::runtime_error("could not unblock socket");
     // }
     set_timeout(m_timeout);
-    
+
     if (not connect_to_telnet(m_socket, a_address, a_port)) {
-        close();
+        close(m_socket);
         throw std::runtime_error("could not connect to telnet");
     }
-    m_connected = true;
 
     // first write trial
     try {
         send("data");
     } catch (...) {
-        close();
+        close(m_socket);
         throw;
     }
 }
 
+TelnetClient::~TelnetClient()
+{
+    close(m_socket);
+}
+
+
+ssize_t TelnetClient::send(std::string const& a_msg)
+{
+    return ::write(m_socket, a_msg.c_str(), a_msg.size());
+}
+
+
+std::string TelnetClient::read() 
+{
+    char buffer[BUFFER_SIZE];
+    ssize_t len = ::read(m_socket, buffer, BUFFER_SIZE - 1);
+    if (len < 0) {
+            throw std::runtime_error("can't read");
+    }
+    else if (len > 0) {
+        std::string result{buffer,len};
+        size_t last_valid = result.find_last_not_of("\r\n");
+        if (last_valid != std::string::npos) {
+            result.erase(last_valid + 1);
+        }
+        return result;
+    }
+
+    throw std::runtime_error("can't read");
+
+}
 
 void TelnetClient::set_timeout(uint32_t const& a_time)
 {

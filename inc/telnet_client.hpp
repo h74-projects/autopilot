@@ -12,21 +12,15 @@ public:
     TelnetClient(std::string const& a_address, uint32_t const& a_port, uint32_t const& a_time_out);
     ~TelnetClient();
 
-    int32_t send(std::string const& a_msg);
-    std::string read(void);
+    ssize_t send(std::string const& a_msg);
+    std::string read();
 
     //in milliseconds
-    void set_timeout(uint32_t const& a_time);
-
-private:
-    int close(void);
+    void set_timeout(uint32_t const& a_time); 
 
 private:    
     int32_t m_socket;
-    //TODO: check if this member is necessary
     uint32_t m_timeout;
-    bool m_is_shutdown;
-    bool m_connected;
 };
 
 } // namespace fgear
