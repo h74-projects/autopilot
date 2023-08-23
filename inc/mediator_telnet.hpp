@@ -4,7 +4,7 @@
 #include "mediator.hpp"
 #include "blocking_map.hpp"
 #include "var.hpp"
-#include "udp_client.hpp"
+#include "tcp_client.hpp"
 
 #include <memory> // shared ptr
 #include <cstdint> // int32_t
@@ -23,7 +23,7 @@ private:
     concurrency::BlockingMap<std::string, Var> m_variables;
     concurrency::BlockingMap<std::string, Var> m_calculations;
     //TODO: in the future abstract Client class
-    UDPClient m_client;
+    TCPClient m_client;
 };
 
 } // namespace fgear
