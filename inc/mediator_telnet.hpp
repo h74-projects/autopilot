@@ -22,8 +22,10 @@ public:
 private:
     concurrency::BlockingMap<std::string, Var> m_variables;
     concurrency::BlockingMap<std::string, Var> m_calculations;
+    std::unordered_map<std::string, std::string> m_proeperties;
     //TODO: in the future abstract Client class
     TCPClient m_client;
+    
 };
 
 } // namespace fgear
