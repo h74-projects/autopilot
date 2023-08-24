@@ -9,17 +9,12 @@ void udpCallback(const std::string& data, ssize_t size) {
 }
 
 BEGIN_TEST(basic_test)
-    // try {
-        int32_t server_port = 49002;
-        TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
-        mediator.set("aileron", -1.0);
-        mediator.set("aileron", 1.0);
-        mediator.set("rudder", 1.0);
-        mediator.set("rudder", -1.0);
-    // } catch (...) {
-    //     ASSERT_FAIL("\nYou fucked up\n");
-    // }
-    ASSERT_PASS();
+    int32_t server_port = 49002;
+    TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
+    mediator.set("engine_throttle", 1.0);
+    ::sleep(3);
+    Var throttle = mediator.get("engine_throttle");
+    ASSERT_THAT(throttle == 1.0);
 
 END_TEST
 
@@ -80,8 +75,8 @@ BEGIN_TEST(listening_to_fgear)
 END_TEST
 
 BEGIN_SUITE("tel it to the judge")
-    IGNORE_TEST(basic_test)
+    TEST(basic_test)
     IGNORE_TEST(client_test)
-    TEST(listening_to_fgear)    
+    IGNORE_TEST(listening_to_fgear)    
 
 END_SUITE
