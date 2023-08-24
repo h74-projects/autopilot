@@ -1,10 +1,9 @@
 #include "mediator_telnet.hpp"
+#include "pugixml.hpp"
 
 #include <variant> //std::get
-#include <nlohmann/json.hpp> // parsing
 #include <iostream> // string stream
 
-#include "pugixml.hpp"
 
 constexpr uint32_t TIME_OUT = 500;
 
@@ -28,7 +27,8 @@ bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::st
 
     if(std::get<1>(a_value) == "bool") {
         return a_iterator.value() == static_cast<bool>(std::get<2>(a_value));
-    }    
+    }
+    throw std::invalid_argument("invalid comparison");    
 }
 
 } // namespace
@@ -123,12 +123,13 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
             insert_to_map(begin);
         }
         ++begin;
-    }    
+    }
+    ++a_len; 
 }
 
 void TelnetMediator::insert_to_map(nlohmann::json::iterator const& a_iterator)
 {
-    std::get<2>(m_variables.at(a_iterator.key())) = a_iterator.value();
+    std::get<2>(m_variables.at(a_iterator.key())) = static_cast<float>(a_iterator.value());
 }
 
 } // namespace fgear

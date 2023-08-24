@@ -19,6 +19,7 @@
 #include <cstdint> // int32_t
 #include <mutex> // mutex
 #include <tuple> // tuple
+#include <nlohmann/json.hpp> // nlhomann::json::iterator
 
 namespace fgear {
 
