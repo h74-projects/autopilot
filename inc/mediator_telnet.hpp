@@ -29,7 +29,7 @@ public:
 
     void set(std::string const& a_key ,Var const& a_var) override;
 
-    //Var get(std::string const& a_key) override;
+    Var get(std::string const& a_key) override;
 
 private:
     std::string make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command);

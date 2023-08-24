@@ -55,6 +55,11 @@ void TelnetMediator::set(std::string const& a_key ,Var const& a_var)
     m_telnet.send(set_command);
 }
 
+Var TelnetMediator::get(std::string const& a_key)
+{
+    return std::get<2>(m_variables.at(a_key));
+}
+
 std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command)
 {
     std::tuple value = m_variables.at(a_key);
