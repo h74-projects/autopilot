@@ -9,10 +9,11 @@ constexpr uint32_t TIME_OUT = 500;
 namespace fgear {
 
 //TODO: load map from file
-TelnetMediator::TelnetMediator(std::string const& a_server_ip, uint32_t const& a_server_port)
-: m_telnet{a_server_ip, a_server_port,TIME_OUT}
+TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, uint32_t const& a_udp_port)
+: m_listen{m_context, a_server_ip, a_udp_port}
+, m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 {
-    fill_map("fgtcp.xml", m_variables);
+    fill_map("../../xml files/generic_small.xml", m_variables);
 }
 
 void TelnetMediator::set(std::string const& a_key ,Var const& a_var)
