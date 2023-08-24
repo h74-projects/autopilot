@@ -36,6 +36,7 @@ private:
     void fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>>& a_variables);
     void get_updates();
     void update_map(std::string const& a_message, ssize_t a_len);
+    void insert_to_map(nlohmann::json::iterator const& a_iterator);
     
 private:
     //TODO: instead of string key we need some variable type enum

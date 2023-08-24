@@ -1,6 +1,8 @@
 #include "mediator_telnet.hpp"
 
 #include <variant> //std::get
+#include <nlohmann/json.hpp> // parsing
+#include <iostream> // string stream
 
 #include "pugixml.hpp"
 
@@ -8,13 +10,36 @@ constexpr uint32_t TIME_OUT = 500;
 
 namespace fgear {
 
+namespace {
+
+bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::string, std::string, Var> const& a_value)
+{
+    if(std::get<1>(a_value) == "int") {
+        return a_iterator.value() == static_cast<int>(std::get<2>(a_value));
+    }
+
+    if(std::get<1>(a_value) == "double") {
+        return a_iterator.value() == static_cast<double>(std::get<2>(a_value));
+    }
+
+    if(std::get<1>(a_value) == "float") {
+        return a_iterator.value() == static_cast<float>(std::get<2>(a_value));
+    }
+
+    if(std::get<1>(a_value) == "bool") {
+        return a_iterator.value() == static_cast<bool>(std::get<2>(a_value));
+    }    
+}
+
+} // namespace
+
 //TODO: load map from file
 TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port)
 : m_server{m_context, a_server_ip, a_udp_port}
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
-    fill_map("../../xml files/generic_small.xml", m_variables);
+    fill_map("../../xml_files/generic_small.xml", m_variables);
 }
 
 TelnetMediator::~TelnetMediator()
@@ -73,6 +98,7 @@ void TelnetMediator::fill_map(std::string const& a_filename, concurrency::Blocki
     }
 }
 
+// should be run in a different thread (or inifinte loop will follow)
 void TelnetMediator::get_updates()
 {
     while (m_active) {
@@ -84,6 +110,20 @@ void TelnetMediator::get_updates()
 
 void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
 {
+    nlohmann::json json_parse{nlohmann::json::parse(a_message)};
+    auto begin = json_parse.begin();
+    auto end = json_parse.end();
+    while (begin != end) {
+        if (not compare_vars(begin, m_variables.at(begin.key()))) {
+            insert_to_map(begin);
+        }
+        ++begin;
+    }    
+}
+
+void TelnetMediator::insert_to_map(nlohmann::json::iterator const& a_iterator)
+{
+    std::get<2>(m_variables.at(a_iterator.key())) = a_iterator.value();
 }
 
 } // namespace fgear
