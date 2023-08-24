@@ -9,14 +9,14 @@ CPPFLAGS = -DDEBUG -I$(INCLUDES_DIR) -I$(SOURCES_DIR)
 INCLUDES_DIR = ../../inc
 SOURCES_DIR = ../../src
 
-OBJS = utest.o $(SOURCES_DIR)/mediator_telnet.o $(SOURCES_DIR)/telnet_client.o
+OBJS = utest.o $(SOURCES_DIR)/mediator_telnet.o $(SOURCES_DIR)/telnet_client.o $(SOURCES_DIR)/udp_server.o
 TARGET = utest
 
 all: $(TARGET)
 
 check: $(TARGET)
 #5401 is the port number! change accordingly in utest if changed here
-	gnome-terminal -- fgfs ..... --telnet=foo,bar,100,foo,5401,bar
+	gnome-terminal -- fgfs --telnet=foo,bar,200,foo,5401,bar --generic=socket,out,5,127.0.0.1,5400,udp,trial
 	sleep 60
 	@./$(TARGET) -v
 
@@ -33,8 +33,11 @@ $(TARGET): $(OBJS)
 
 utest.o: $(INCLUDES_DIR)/mu_test.h
 
+.PHONY: all check recheck clang_check clean
+
+#dependencies
 $(SOURCES_DIR)/mediator_telnet.o: $(INCLUDES_DIR)/mediator_telnet.hpp $(INCLUDES_DIR)/mediator.hpp $(INCLUDES_DIR)/telnet_client.hpp
 
 $(SOURCES_DIR)/telnet_client.o: $(INCLUDES_DIR)/telnet_client.hpp
 
-.PHONY: all check recheck clang_check clean
+$(SOURCES_DIR)/udp_server.o: $(INCLUDES_DIR)/udp_server.hpp

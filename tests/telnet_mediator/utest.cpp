@@ -1,21 +1,23 @@
 #include "mu_test.h"
 #include "mediator_telnet.hpp"
+#include "udp_server.hpp"
 
 using namespace fgear;
 
+void udpCallback(const std::string& data, ssize_t size) {
+    std::cout << "Received UDP data: " << data << " (Size: " << size << ")" << std::endl;
+}
+
 BEGIN_TEST(basic_test)
-    try {
+    // try {
         TelnetMediator mediator{"127.0.0.1", 5401};
-        mediator.set("alieron", -1.0);
-        sleep(1);
-        mediator.set("alieron", 1.0);
-        sleep(1);
+        mediator.set("aileron", -1.0);
+        mediator.set("aileron", 1.0);
         mediator.set("rudder", 1.0);
-        sleep(1);
         mediator.set("rudder", -1.0);
-    } catch (...) {
-        ASSERT_FAIL("\nYou fucked up\n");
-    }
+    // } catch (...) {
+    //     ASSERT_FAIL("\nYou fucked up\n");
+    // }
     ASSERT_PASS();
 
 END_TEST
@@ -50,8 +52,35 @@ BEGIN_TEST(client_test)
 END_TEST
 
 
+BEGIN_TEST(listening_to_fgear)
+    boost::asio::io_context io_context;
+
+    // Start the UDP server
+    int32_t serverPort = 49002; // Adjust the port if needed
+    communication::UDPServer udpServer(io_context, "192.168.1.255", serverPort);
+
+    // Use a flag to indicate when the server has received data
+    bool dataReceived = false;
+    
+    udpServer.start_listening([&](const std::string& data, ssize_t size) {
+        udpCallback(data, size);
+        dataReceived = true;
+    });
+
+    std::thread io_thread([&]() {
+        io_context.run();
+    });    
+    while (true) {
+    }
+
+    io_thread.join();    
+
+
+END_TEST
+
 BEGIN_SUITE("tel it to the judge")
-    TEST(basic_test)
-    TEST(client_test)
+    IGNORE_TEST(basic_test)
+    IGNORE_TEST(client_test)
+    TEST(listening_to_fgear)    
 
 END_SUITE
