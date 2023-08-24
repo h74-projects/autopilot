@@ -10,7 +10,8 @@ void udpCallback(const std::string& data, ssize_t size) {
 
 BEGIN_TEST(basic_test)
     // try {
-        TelnetMediator mediator{"127.0.0.1", 5401};
+        int32_t server_port = 49002;
+        TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
         mediator.set("aileron", -1.0);
         mediator.set("aileron", 1.0);
         mediator.set("rudder", 1.0);
@@ -56,8 +57,8 @@ BEGIN_TEST(listening_to_fgear)
     boost::asio::io_context io_context;
 
     // Start the UDP server
-    int32_t serverPort = 49002; // Adjust the port if needed
-    communication::UDPServer udpServer(io_context, "192.168.1.255", serverPort);
+    uint32_t server_port = 49002; // Adjust the port if needed
+    communication::UDPServer udpServer(io_context, "127.0.0.1", server_port);
 
     // Use a flag to indicate when the server has received data
     bool dataReceived = false;
