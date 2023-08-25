@@ -13,19 +13,20 @@ namespace {
 
 bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::string, std::string, Var> const& a_value)
 {
-    if(std::get<1>(a_value) == "int") {
+    Var value = std::get<2>(a_value);
+    if(value.type_id() == std::any{int{}}.type().name()) {
         return a_iterator.value() == static_cast<int>(std::get<2>(a_value));
     }
 
-    if(std::get<1>(a_value) == "double") {
+    if(value.type_id() == std::any{double{}}.type().name()) {
         return a_iterator.value() == static_cast<double>(std::get<2>(a_value));
     }
 
-    if(std::get<1>(a_value) == "float") {
+    if(value.type_id() == std::any{float{}}.type().name()) {
         return a_iterator.value() == static_cast<float>(std::get<2>(a_value));
     }
 
-    if(std::get<1>(a_value) == "bool") {
+    if(value.type_id() == std::any{bool{}}.type().name()) {
         return a_iterator.value() == static_cast<bool>(std::get<2>(a_value));
     }
     throw std::invalid_argument("invalid comparison");    
@@ -62,21 +63,21 @@ Var TelnetMediator::get(std::string const& a_key)
 
 std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command)
 {
-    std::tuple value = m_variables.at(a_key);
-    std::string return_command = a_command + ' ' + std::get<0>(value) + ' ';  
-    if(std::get<1>(value) == "int") {
+    Var value = std::get<2>(m_variables.at(a_key));
+    std::string return_command = a_command + ' ' + a_key + ' ';  
+    if(value.type_id() == std::any{int{}}.type().name()) {
         return return_command += std::to_string(static_cast<int>(a_var)) + "\015\012";
     }
 
-    if(std::get<1>(value) == "double") {
+    if(value.type_id() == std::any{double{}}.type().name()) {
         return return_command += std::to_string(static_cast<double>(a_var)) + "\015\012";
     }
 
-    if(std::get<1>(value) == "float") {
+    if(value.type_id() == std::any{float{}}.type().name()) {
         return return_command += std::to_string(static_cast<float>(a_var)) + "\015\012";
     }
 
-    if(std::get<1>(value) == "bool") {
+    if(value.type_id() == std::any{bool{}}.type().name()) {
         return return_command += std::to_string(static_cast<bool>(a_var)) + "\015\012";
     }
 
