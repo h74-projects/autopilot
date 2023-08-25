@@ -3,6 +3,7 @@
 
 #include <variant> //std::get
 #include <iostream> // string stream
+#include <fstream> // fstream
 
 
 constexpr uint32_t TIME_OUT = 500;
@@ -40,7 +41,7 @@ TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string cons
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
-    fill_map("../../files/map_values.json", m_variables);
+    fill_map("../../files/map_values.json");
 }
 
 TelnetMediator::~TelnetMediator()
@@ -84,23 +85,19 @@ std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_
     throw std::invalid_argument("invalid argument");
 }
 
-void TelnetMediator::fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, Var>>& a_variables)
+void TelnetMediator::fill_map(std::string const& a_filename)
 {
-    pugi::xml_document doc;
-    if (!doc.load_file(a_filename.c_str())) {
-        throw std::runtime_error("failed to load");
+    std::fstream file(a_filename);
+    if (not file.is_open()) {
+        throw std::runtime_error("could not open file");
     }
-    
-    for (pugi::xpath_node chunk_node : doc.select_nodes("/PropertyList/chunk")) {
-        pugi::xml_node node = chunk_node.node();
-        std::string name = node.child_value("name");
-        std::string type = node.child_value("type");
-        std::string format = node.child_value("format");
-        std::string node_path = node.child_value("node");
 
-        if (!name.empty() && !type.empty() && !format.empty() && !node_path.empty()) {
-            a_variables[name] = std::make_tuple(node_path, type, Var(format));
-        }
+    nlohmann::json data = nlohmann::json::parse(file);
+    auto begin = data.begin();
+    auto end = data.end();
+    while (begin != end) {
+        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], Var(begin.value()["format"]));
+        ++begin;
     }
 }
 
@@ -130,7 +127,8 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
 
 void TelnetMediator::insert_to_map(nlohmann::json::iterator const& a_iterator)
 {
-    std::get<2>(m_variables.at(a_iterator.key())) = static_cast<float>(a_iterator.value());
+    //TODO: add an operator for json iterator
+    std::get<1>(m_variables.at(a_iterator.key())) = (a_iterator.value());
 }
 
 } // namespace fgear

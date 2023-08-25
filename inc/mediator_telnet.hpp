@@ -34,7 +34,7 @@ public:
 
 private:
     std::string make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command);
-    void fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>>& a_variables);
+    void fill_map(std::string const& a_filename);
     void get_updates();
     void update_map(std::string const& a_message, ssize_t a_len);
     void insert_to_map(nlohmann::json::iterator const& a_iterator);

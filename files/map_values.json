@@ -7,7 +7,7 @@
     },
 
 
-    "/sim/time/warp</": {
+    "/sim/time/warp/": {
     	"node": "/sim/time/warp",
     	"name": "time_warp",
 		"type": "float",
