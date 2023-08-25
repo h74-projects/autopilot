@@ -61,7 +61,7 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     auto begin = data.begin();
     auto end = data.end();
     while (begin != end) {
-        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], Var{});
+        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], float{});
         ++begin;
     }
 }
