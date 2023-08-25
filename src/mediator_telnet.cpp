@@ -14,27 +14,6 @@ namespace fgear {
 
 namespace {
 
-bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::string, Var> const& a_value)
-{
-    Var value = std::get<1>(a_value);
-    if(value.type_id() == std::any{int{}}.type().name()) {
-        return a_iterator.value() == static_cast<int>(std::get<1>(a_value));
-    }
-
-    if(value.type_id() == std::any{double{}}.type().name()) {
-        return a_iterator.value() == static_cast<double>(std::get<1>(a_value));
-    }
-
-    if(value.type_id() == std::any{float{}}.type().name()) {
-        return a_iterator.value() == static_cast<float>(std::get<1>(a_value));
-    }
-
-    if(value.type_id() == std::any{bool{}}.type().name()) {
-        return a_iterator.value() == static_cast<bool>(std::get<1>(a_value));
-    }
-    throw std::invalid_argument("invalid comparison");    
-}
-
 } // namespace
 
 //TODO: load map from file
@@ -103,33 +82,13 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
     auto begin = json_parse.begin();
     auto end = json_parse.end();
     while (begin != end) {
-        if (not compare_vars(begin, m_variables.at(begin.key()))) {
-            insert_to_map(begin);
+        float& value = std::get<1>(m_variables.at(begin.key()));
+        if (not begin.value() == value) {
+            value = begin.value();
         }
         ++begin;
     }
     ++a_len; 
-}
-
-void TelnetMediator::insert_to_map(nlohmann::json::iterator const& a_iterator)
-{
-    Var value = std::get<1>(m_variables.at(a_iterator.key()));
-    if(value.type_id() == std::any{int{}}.type().name()) {
-        value = static_cast<int>(a_iterator.value());
-    }
-
-    if(value.type_id() == std::any{double{}}.type().name()) {
-        value = static_cast<double>(a_iterator.value());
-    }
-
-    if(value.type_id() == std::any{float{}}.type().name()) {
-        value = static_cast<float>(a_iterator.value());
-    }
-
-    if(value.type_id() == std::any{bool{}}.type().name()) {
-        value = static_cast<bool>(a_iterator.value());
-    }
-    throw std::invalid_argument("format doesn't exist");
 }
 
 } // namespace fgear
