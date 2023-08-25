@@ -19,6 +19,7 @@
 #include <mutex> // mutex
 #include <tuple> // tuple
 #include <nlohmann/json.hpp> // nlhomann::json::iterator
+#include <thread> // listener thread
 
 namespace fgear {
 
@@ -31,12 +32,10 @@ public:
 
     float get(std::string const& a_key) override;
 
-    // should be run in a different thread (or inifinte loop will follow)
-    void get_updates();
-
 private:
     std::string make_command(std::string const& a_key ,float const& a_var, std::string const& a_command);
     void fill_map(std::string const& a_filename);
+    void get_updates();
     void update_map(std::string const& a_message, ssize_t a_len);
     
 private:
@@ -50,6 +49,7 @@ private:
     communication::UDPServer m_server;
     TelnetClient m_telnet;
     bool m_active;
+    std::thread m_listener;
 };
 
 } // namespace fgear

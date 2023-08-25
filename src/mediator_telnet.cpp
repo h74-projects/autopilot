@@ -23,12 +23,13 @@ TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string cons
 , m_active{true}
 {
     fill_map("../../files/map_values.json");
+    m_listener = std::thread{[this]{get_updates();}};
 }
 
 TelnetMediator::~TelnetMediator()
 {
     m_active = false;
-    m_server.stop_listening();
+    m_listener.join();
 }
 
 void TelnetMediator::set(std::string const& a_key ,float const& a_var)
@@ -66,7 +67,6 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     }
 }
 
-// should be run in a different thread (or inifinte loop will follow)
 void TelnetMediator::get_updates()
 {
     while (m_active) {
