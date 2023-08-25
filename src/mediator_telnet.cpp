@@ -6,6 +6,8 @@
 #include <fstream> // fstream
 
 
+//TODO: exception handling
+
 constexpr uint32_t TIME_OUT = 500;
 
 namespace fgear {
@@ -96,7 +98,7 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     auto begin = data.begin();
     auto end = data.end();
     while (begin != end) {
-        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], Var(begin.value()["format"]));
+        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], Var{});
         ++begin;
     }
 }
@@ -127,8 +129,23 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
 
 void TelnetMediator::insert_to_map(nlohmann::json::iterator const& a_iterator)
 {
-    //TODO: add an operator for json iterator
-    std::get<1>(m_variables.at(a_iterator.key())) = (a_iterator.value());
+    Var value = std::get<1>(m_variables.at(a_iterator.key()));
+    if(value.type_id() == std::any{int{}}.type().name()) {
+        value = static_cast<int>(a_iterator.value());
+    }
+
+    if(value.type_id() == std::any{double{}}.type().name()) {
+        value = static_cast<double>(a_iterator.value());
+    }
+
+    if(value.type_id() == std::any{float{}}.type().name()) {
+        value = static_cast<float>(a_iterator.value());
+    }
+
+    if(value.type_id() == std::any{bool{}}.type().name()) {
+        value = static_cast<bool>(a_iterator.value());
+    }
+    throw std::invalid_argument("format doesn't exist");
 }
 
 } // namespace fgear
