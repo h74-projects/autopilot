@@ -52,39 +52,23 @@ TelnetMediator::~TelnetMediator()
     m_server.stop_listening();
 }
 
-void TelnetMediator::set(std::string const& a_key ,Var const& a_var)
+void TelnetMediator::set(std::string const& a_key ,float const& a_var)
 {
     std::string set_command = make_command(a_key, a_var, "set");
     std::unique_lock lock{m_mtx};
     m_telnet.send(set_command);
 }
 
-Var TelnetMediator::get(std::string const& a_key)
+float TelnetMediator::get(std::string const& a_key)
 {
     return std::get<1>(m_variables.at(a_key));
 }
 
-std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command)
+std::string TelnetMediator::make_command(std::string const& a_key ,float const& a_var, std::string const& a_command)
 {
     Var value = std::get<1>(m_variables.at(a_key));
-    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ';  
-    if(value.type_id() == std::any{int{}}.type().name()) {
-        return return_command += std::to_string(static_cast<int>(a_var)) + "\015\012";
-    }
-
-    if(value.type_id() == std::any{double{}}.type().name()) {
-        return return_command += std::to_string(static_cast<double>(a_var)) + "\015\012";
-    }
-
-    if(value.type_id() == std::any{float{}}.type().name()) {
-        return return_command += std::to_string(static_cast<float>(a_var)) + "\015\012";
-    }
-
-    if(value.type_id() == std::any{bool{}}.type().name()) {
-        return return_command += std::to_string(static_cast<bool>(a_var)) + "\015\012";
-    }
-
-    throw std::invalid_argument("invalid argument");
+    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ' + std::to_string(a_var);
+    return return_command;  
 }
 
 void TelnetMediator::fill_map(std::string const& a_filename)

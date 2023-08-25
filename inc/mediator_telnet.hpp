@@ -8,7 +8,6 @@
 // bool = "bool"
 // int32_t = "int32_t"
 
-
 #include "mediator.hpp"
 #include "blocking_map.hpp"
 #include "var.hpp"
@@ -28,12 +27,12 @@ public:
     TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port);
     ~TelnetMediator();
 
-    void set(std::string const& a_key ,Var const& a_var) override;
+    void set(std::string const& a_key ,float const& a_var) override;
 
-    Var get(std::string const& a_key) override;
+    float get(std::string const& a_key) override;
 
 private:
-    std::string make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command);
+    std::string make_command(std::string const& a_key ,float const& a_var, std::string const& a_command);
     void fill_map(std::string const& a_filename);
     void get_updates();
     void update_map(std::string const& a_message, ssize_t a_len);
@@ -43,7 +42,7 @@ private:
     //TODO: instead of string key we need some variable type enum
     //key: name of property as written under the name tag in the json
     //value: tupple of string of the property as written in node at the property tree and a Var value
-    concurrency::BlockingMap<std::string, std::tuple<std::string, Var>> m_variables;
+    concurrency::BlockingMap<std::string, std::tuple<std::string, float>> m_variables;
     //TODO: in the future abstract Client class
     std::mutex m_mtx;
     boost::asio::io_context m_context;
