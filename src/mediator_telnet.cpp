@@ -58,13 +58,13 @@ void TelnetMediator::set(std::string const& a_key ,Var const& a_var)
 
 Var TelnetMediator::get(std::string const& a_key)
 {
-    return std::get<2>(m_variables.at(a_key));
+    return std::get<1>(m_variables.at(a_key));
 }
 
 std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_var, std::string const& a_command)
 {
-    Var value = std::get<2>(m_variables.at(a_key));
-    std::string return_command = a_command + ' ' + a_key + ' ';  
+    Var value = std::get<1>(m_variables.at(a_key));
+    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ';  
     if(value.type_id() == std::any{int{}}.type().name()) {
         return return_command += std::to_string(static_cast<int>(a_var)) + "\015\012";
     }

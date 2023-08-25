@@ -41,10 +41,11 @@ private:
     
 private:
     //TODO: instead of string key we need some variable type enum
-    //tuple order <property, typename, Var>
-    concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>> m_variables;
+    //key: name of property as written under the name tag in the json
+    //value: tupple of string of the property as written in node at the property tree and a Var value
+    concurrency::BlockingMap<std::string, std::tuple<std::string, Var>> m_variables;
     //TODO: in the future abstract Client class
-    std::mutex m_mtx;    
+    std::mutex m_mtx;
     boost::asio::io_context m_context;
     communication::UDPServer m_server;
     TelnetClient m_telnet;
