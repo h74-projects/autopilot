@@ -11,23 +11,23 @@ namespace fgear {
 
 namespace {
 
-bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::string, std::string, Var> const& a_value)
+bool compare_vars(nlohmann::json::iterator const& a_iterator, std::tuple<std::string, Var> const& a_value)
 {
-    Var value = std::get<2>(a_value);
+    Var value = std::get<1>(a_value);
     if(value.type_id() == std::any{int{}}.type().name()) {
-        return a_iterator.value() == static_cast<int>(std::get<2>(a_value));
+        return a_iterator.value() == static_cast<int>(std::get<1>(a_value));
     }
 
     if(value.type_id() == std::any{double{}}.type().name()) {
-        return a_iterator.value() == static_cast<double>(std::get<2>(a_value));
+        return a_iterator.value() == static_cast<double>(std::get<1>(a_value));
     }
 
     if(value.type_id() == std::any{float{}}.type().name()) {
-        return a_iterator.value() == static_cast<float>(std::get<2>(a_value));
+        return a_iterator.value() == static_cast<float>(std::get<1>(a_value));
     }
 
     if(value.type_id() == std::any{bool{}}.type().name()) {
-        return a_iterator.value() == static_cast<bool>(std::get<2>(a_value));
+        return a_iterator.value() == static_cast<bool>(std::get<1>(a_value));
     }
     throw std::invalid_argument("invalid comparison");    
 }
@@ -40,7 +40,7 @@ TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string cons
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
-    fill_map("../../xml_files/generic_small.xml", m_variables);
+    fill_map("../../files/map_values.json", m_variables);
 }
 
 TelnetMediator::~TelnetMediator()
@@ -84,7 +84,7 @@ std::string TelnetMediator::make_command(std::string const& a_key ,Var const& a_
     throw std::invalid_argument("invalid argument");
 }
 
-void TelnetMediator::fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, std::string, Var>>& a_variables)
+void TelnetMediator::fill_map(std::string const& a_filename, concurrency::BlockingMap<std::string, std::tuple<std::string, Var>>& a_variables)
 {
     pugi::xml_document doc;
     if (!doc.load_file(a_filename.c_str())) {
