@@ -2,6 +2,8 @@
 #include "mediator_telnet.hpp"
 #include "udp_server.hpp"
 
+#include <thread> // std::thread
+
 using namespace fgear;
 
 void udpCallback(const std::string& data, ssize_t size) {
@@ -12,9 +14,11 @@ BEGIN_TEST(basic_test)
     int32_t server_port = 49002;
     TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
     mediator.set("engine_throttle", 1.0);
+    std::thread listener{[&mediator]{mediator.get_updates();}};
     ::sleep(3);
-    Var throttle = mediator.get("engine_throttle");
+    float throttle = mediator.get("engine_throttle");
     ASSERT_THAT(throttle == 1.0);
+    listener.join();
 
 END_TEST
 
