@@ -23,7 +23,7 @@
 
 	"/instrumentation/heading-indicator/offset-deg": {
     	"node": "/instrumentation/heading-indicator/offset-deg",
-    	"name": "heading-indicator_offset",
+    	"name": "heading-indicator_offset-deg",
 		"type": "float",
 		"format": "%f"
     },
