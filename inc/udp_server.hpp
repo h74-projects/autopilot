@@ -21,7 +21,7 @@ private:
     
     udp::socket m_socket;
     udp::endpoint m_sender_endpoint;
-    char m_recv_buffer[1024];
+    char m_recv_buffer[4096];
     std::function<void(std::string const&, ssize_t)> m_callback;
     bool m_listening;
     std::string m_ip;
