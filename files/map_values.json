@@ -1,0 +1,259 @@
+{ 
+    "airspeed-indicator_indicated-speed-kt": {
+    	"node": "/instrumentation/airspeed-indicator/indicated-speed-kt",
+    	"name": "airspeed-indicator_indicated-speed-kt",
+		"type": "float",
+		"format": "%f"
+    },
+
+
+    "/sim/time/warp/": {
+    	"node": "/sim/time/warp",
+    	"name": "time_warp",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/switches/magnetos": {
+    	"node": "/controls/switches/magnetos",
+    	"name": "switches_magnetos",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/heading-indicator/offset-deg": {
+    	"node": "/instrumentation/heading-indicator/offset-deg",
+    	"name": "heading-indicator_offset-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/altimeter/indicated-altitude-ft": {
+    	"node": "/instrumentation/altimeter/indicated-altitude-ft",
+    	"name": "altimeter_indicated-altitude-ft",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/altimeter/pressure-alt-ft": {
+    	"node": "/instrumentation/altimeter/pressure-alt-ft",
+    	"name": "altimeter_pressure-alt-ft",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/attitude-indicator/indicated-pitch-deg": {
+    	"node": "/instrumentation/attitude-indicator/indicated-pitch-deg",
+    	"name": "attitude-indicator_indicated-pitch-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/attitude-indicator/indicated-roll-deg": {
+    	"node": "/instrumentation/attitude-indicator/indicated-roll-deg",
+    	"name": "attitude-indicator_indicated-roll-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/attitude-indicator/internal-pitch-deg": {
+    	"node": "/instrumentation/attitude-indicator/internal-pitch-deg",
+    	"name": "attitude-indicator_internal-pitch-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/attitude-indicator/internal-roll-deg": {
+    	"node": "/instrumentation/attitude-indicator/internal-roll-deg",
+    	"name": "attitude-indicator_internal-roll-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/encoder/indicated-altitude-ft": {
+    	"node": "/instrumentation/encoder/indicated-altitude-ft",
+    	"name": "encoder_indicated-altitude-ft",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/encoder/pressure-alt-ft": {
+    	"node": "/instrumentation/encoder/pressure-alt-ft",
+    	"name": "encoder_pressure-alt-ft",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/gps/indicated-altitude-ft": {
+    	"node": "/instrumentation/gps/indicated-altitude-ft",
+    	"name": "gps_indicated-altitude-ft",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/gps/indicated-ground-speed-kt": {
+    	"node": "/instrumentation/gps/indicated-ground-speed-kt",
+    	"name": "gps_indicated-ground-speed-kt",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/gps/indicated-vertical-speed": {
+    	"node": "/instrumentation/gps/indicated-vertical-speed",
+    	"name": "gps_indicated-vertical-speed",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/heading-indicator/indicated-heading-deg": {
+    	"node": "/instrumentation/heading-indicator/indicated-heading-deg",
+    	"name": "indicated-heading-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+
+	"/instrumentation/magnetic-compass/indicated-heading-deg": {
+    	"node": "/instrumentation/magnetic-compass/indicated-heading-deg",
+    	"name": "magnetic-compass_indicated-heading-deg",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/slip-skid-ball/indicated-slip-skid": {
+    	"node": "/instrumentation/slip-skid-ball/indicated-slip-skid",
+    	"name": "slip-skid-ball_indicated-slip-skid",
+		"type": "float",
+		"format": "%f"
+    },
+
+
+	"/instrumentation/turn-indicator/indicated-turn-rate": {
+    	"node": "/instrumentation/turn-indicator/indicated-turn-rate",
+    	"name": "turn-indicator_indicated-turn-rate",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/instrumentation/vertical-speed-indicator/indicated-speed-fpm": {
+    	"node": "/instrumentation/vertical-speed-indicator/indicated-speed-fpm",
+    	"name": "vertical-speed-indicator_indicated-speed-fpm",
+		"type": "float",
+		"format": "%f"
+    },
+
+
+	"/controls/flight/aileron": {
+    	"node": "/controls/flight/aileron",
+    	"name": "flight_aileron",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/flight/elevator": {
+    	"node": "/controls/flight/elevator",
+    	"name": "flight_elevator",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/flight/rudder": {
+    	"node": "/controls/flight/rudder",
+    	"name": "flight_rudder",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/flight/flaps": {
+    	"node": "/controls/flight/flaps",
+    	"name": "flight_flaps",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/engines/engine/throttle": {
+    	"node": "/controls/engines/engine/throttle",
+    	"name": "engine_throttle",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/engines/current-engine/throttle": {
+    	"node": "/controls/engines/current-engine/throttle",
+    	"name": "current-engine_throttle",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/switches/master-avionics": {
+    	"node": "/controls/switches/master-avionics",
+    	"name": "switches_master-avionics",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/switches/starter": {
+    	"node": "/controls/switches/starter",
+    	"name": "switches_starter",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/engines/active-engine/auto-start": {
+    	"node": "/engines/active-engine/auto-start",
+    	"name": "active-engine_auto-start",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/flight/speedbrake": {
+    	"node": "/controls/flight/speedbrake",
+    	"name": "flight_speedbrake",
+		"type": "float",
+		"format": "%f"
+    },
+
+
+	"/sim/model/c172p/brake-parking": {
+    	"node": "/sim/model/c172p/brake-parking",
+    	"name": "c172p_brake-parking",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/engines/engine/primer": {
+    	"node": "/controls/engines/engine/primer",
+    	"name": "engine_primer",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/engines/current-engine/mixture": {
+    	"node": "/controls/engines/current-engine/mixture",
+    	"name": "current-engine_mixture",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/switches/master-bat": {
+    	"node": "/controls/switches/master-bat",
+    	"name": "switches_master-bat",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/controls/switches/master-alt": {
+    	"node": "/controls/switches/master-alt",
+    	"name": "switches_master-alt",
+		"type": "float",
+		"format": "%f"
+    },
+
+	"/engines/engine/rpm": {
+    	"node": "/engines/engine/rpm",
+    	"name": "engine_rpm",
+		"type": "float",
+		"format": "%f"
+    }
+
+}

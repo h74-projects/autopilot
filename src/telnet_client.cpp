@@ -12,7 +12,7 @@
 
 namespace fgear {
 
-constexpr uint32_t BUFFER_SIZE = 1024;
+constexpr uint32_t BUFFER_SIZE = 4096;
 
 namespace {
 
@@ -37,7 +37,6 @@ bool connect_to_telnet(int32_t const& a_socket, std::string const& a_address, ui
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(a_port);
     if (inet_pton(AF_INET, a_address.c_str(), &serv_addr.sin_addr) <= 0) {
-
         return false;
     }
 
@@ -83,9 +82,7 @@ TelnetClient::~TelnetClient()
 
 ssize_t TelnetClient::send(std::string const& a_msg)
 {
-    std::string to_be_sent{a_msg};
-    to_be_sent += "\015\012";
-    return ::write(m_socket, to_be_sent.c_str(), to_be_sent.size());
+    return ::write(m_socket, a_msg.c_str(), a_msg.size());
 }
 
 
