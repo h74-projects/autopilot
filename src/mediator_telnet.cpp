@@ -44,10 +44,15 @@ float TelnetMediator::get(std::string const& a_key)
     return std::get<1>(m_variables.at(a_key));
 }
 
+void TelnetMediator::shutdown()
+{
+    m_active = false;
+    m_listener.join();
+}
+
 std::string TelnetMediator::make_command(std::string const& a_key ,float const& a_var, std::string const& a_command)
 {
-    Var value = std::get<1>(m_variables.at(a_key));
-    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ' + std::to_string(a_var);
+    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ' + std::to_string(a_var) + "\015\012";
     return return_command;  
 }
 
@@ -69,11 +74,11 @@ void TelnetMediator::fill_map(std::string const& a_filename)
 
 void TelnetMediator::get_updates()
 {
-    while (m_active) {
-        m_server.start_listening([&, this](const std::string& data, ssize_t size) {
+    auto lambda = [this](const std::string& data, ssize_t size) {
             update_map(data, size);
-        });
-    }
+    };
+    m_server.start_listening(lambda);
+    while (m_active) {}
 }
 
 void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)

@@ -32,10 +32,12 @@ public:
 
     float get(std::string const& a_key) override;
 
+    void get_updates();
+
+    void shutdown();
 private:
     std::string make_command(std::string const& a_key ,float const& a_var, std::string const& a_command);
     void fill_map(std::string const& a_filename);
-    void get_updates();
     void update_map(std::string const& a_message, ssize_t a_len);
     
 private:
