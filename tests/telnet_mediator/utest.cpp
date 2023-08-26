@@ -1,6 +1,7 @@
 #include "mu_test.h"
 #include "mediator_telnet.hpp"
 #include "udp_server.hpp"
+#include "my_udp.hpp"
 
 #include <thread> // std::thread
 
@@ -13,12 +14,22 @@ void udpCallback(const std::string& data, ssize_t size) {
 BEGIN_TEST(basic_test)
     int32_t server_port = 49002;
     TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
-    mediator.set("engine_throttle", 1.0);
-    std::thread listener{[&mediator]{mediator.get_updates();}};
-    ::sleep(3);
-    float throttle = mediator.get("engine_throttle");
-    ASSERT_THAT(throttle == 1.0);
-    listener.join();
+    mediator.set("engine_throttle", 1);
+    mediator.set("flight_rudder", 1);
+    ::sleep(5);
+    // float throttle = mediator.get("current-engine_throttle");
+    float rudder = mediator.get("flight_rudder");
+    ASSERT_EQUAL(rudder,1);
+
+END_TEST
+
+BEGIN_TEST(server_test)
+    int32_t server_port = 49002;
+    TelnetMediator mediator{"127.0.0.1","127.0.0.1", 5401, server_port};
+    mediator.get_updates();
+    int number = 1;
+    ++number;
+    while(true){}
 
 END_TEST
 
@@ -73,14 +84,16 @@ BEGIN_TEST(listening_to_fgear)
     while (true) {
     }
 
-    io_thread.join();    
+    // io_thread.join();    
 
 
 END_TEST
 
+
 BEGIN_SUITE("tel it to the judge")
     TEST(basic_test)
     IGNORE_TEST(client_test)
-    IGNORE_TEST(listening_to_fgear)    
+    TEST(listening_to_fgear)    
+    IGNORE_TEST(server_test)
 
 END_SUITE
