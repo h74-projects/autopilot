@@ -4,6 +4,8 @@
 #include <variant> //std::get
 #include <iostream> // string stream
 #include <fstream> // fstream
+#include <algorithm> // remove if
+#include <boost/algorithm/string.hpp> // erase all
 
 
 //TODO: exception handling
@@ -23,13 +25,21 @@ TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string cons
 , m_active{true}
 {
     fill_map("../../files/map_values.json");
-    m_listener = std::thread{[this]{get_updates();}};
+    m_listener.push_back(std::thread{[this]{get_updates();}});
+    m_listener.push_back(std::thread{[this]() {
+        while(m_active) {
+            m_context.run();
+        }
+    }});
+
 }
 
 TelnetMediator::~TelnetMediator()
 {
     m_active = false;
-    m_listener.join();
+    for (auto& thread : m_listener) {
+        thread.join();
+    }
 }
 
 void TelnetMediator::set(std::string const& a_key ,float const& a_var)
@@ -42,12 +52,6 @@ void TelnetMediator::set(std::string const& a_key ,float const& a_var)
 float TelnetMediator::get(std::string const& a_key)
 {
     return std::get<1>(m_variables.at(a_key));
-}
-
-void TelnetMediator::shutdown()
-{
-    m_active = false;
-    m_listener.join();
 }
 
 std::string TelnetMediator::make_command(std::string const& a_key ,float const& a_var, std::string const& a_command)
@@ -76,24 +80,31 @@ void TelnetMediator::get_updates()
 {
     auto lambda = [this](const std::string& data, ssize_t size) {
             update_map(data, size);
+            std::cout << data;
     };
     m_server.start_listening(lambda);
-    while (m_active) {}
+    while(m_active) {}
 }
 
 void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
 {
-    nlohmann::json json_parse{nlohmann::json::parse(a_message)};
-    auto begin = json_parse.begin();
-    auto end = json_parse.end();
-    while (begin != end) {
-        float& value = std::get<1>(m_variables.at(begin.key()));
-        if (not begin.value() == value) {
-            value = begin.value();
+    size_t name_index{};
+    size_t value_index = a_message.find(":") + 1;
+    size_t end_index = a_message.find(",");
+    while (end_index <= a_message.size()) {
+        std::string name = a_message.substr(name_index, value_index - 1 - name_index);
+        float value = std::stof(a_message.substr(value_index, end_index - value_index));
+        float& curr = std::get<1>(m_variables.at(name));
+        if ( value != curr) {
+            curr = value;
         }
-        ++begin;
+        name_index = end_index + 1;
+        value_index = a_message.find(":", name_index) + 1;
+        end_index = a_message.find(",", name_index);
+        name.clear();
     }
-    ++a_len; 
+    ++a_len;
+
 }
 
 } // namespace fgear

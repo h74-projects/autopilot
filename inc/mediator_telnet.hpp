@@ -34,7 +34,6 @@ public:
 
     void get_updates();
 
-    void shutdown();
 private:
     std::string make_command(std::string const& a_key ,float const& a_var, std::string const& a_command);
     void fill_map(std::string const& a_filename);
@@ -51,7 +50,7 @@ private:
     communication::UDPServer m_server;
     TelnetClient m_telnet;
     bool m_active;
-    std::thread m_listener;
+    std::vector<std::thread> m_listener;
 };
 
 } // namespace fgear
