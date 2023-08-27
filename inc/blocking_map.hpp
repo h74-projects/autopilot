@@ -14,7 +14,8 @@ public:
     BlockingMap() = default;
     ~BlockingMap() = default;
 
-    BlockingMap(BlockingMap const& a_map);
+    BlockingMap(BlockingMap const&) = delete;
+    BlockingMap operator=(BlockingMap const&) = delete;
 
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
@@ -23,9 +24,6 @@ public:
     V const& at(K const& a_key) const;
 
     V& operator[](K const& a_key);
-
-    //TODO: maybe
-    V read(K const& a_key) const;
 
     bool contains(K const& a_key) const noexcept;
 
