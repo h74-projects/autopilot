@@ -16,7 +16,6 @@ UDPServer::UDPServer(std::string const& a_ip, int32_t a_port)
 UDPServer::~UDPServer() 
 {
     stop_listening();
-    m_handler.join();
 }
 
 void UDPServer::start_listening(std::function<void(const std::string&, ssize_t)> a_callback) 
@@ -50,6 +49,7 @@ void UDPServer::stop_listening()
     if (m_listening) {
         m_listening = false;
         m_socket.close();
+        m_handler.join();
     }
 }
 
