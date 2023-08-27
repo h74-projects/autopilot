@@ -6,8 +6,8 @@
 
 namespace communication { 
 
-UDPServer::UDPServer(boost::asio::io_context& io_context, std::string const& a_ip, int32_t a_port)
-: m_socket(io_context, udp::endpoint(udp::v4(), a_port))
+UDPServer::UDPServer(std::string const& a_ip, int32_t a_port)
+: m_socket(m_context, udp::endpoint(udp::v4(), a_port))
 , m_listening(false) 
 , m_ip(a_ip)
 {
@@ -16,6 +16,7 @@ UDPServer::UDPServer(boost::asio::io_context& io_context, std::string const& a_i
 UDPServer::~UDPServer() 
 {
     stop_listening();
+    m_handler.join();
 }
 
 void UDPServer::start_listening(std::function<void(const std::string&, ssize_t)> a_callback) 
@@ -24,6 +25,12 @@ void UDPServer::start_listening(std::function<void(const std::string&, ssize_t)>
         m_listening = true;
         m_callback = a_callback;
         do_receive();
+        auto handler = [this]() {
+            while (m_listening) {
+                m_context.run();
+            }
+        };
+        m_handler = std::thread{handler};
     }
 }
 

@@ -3,6 +3,7 @@
 
 #include <boost/asio.hpp>
 #include <functional>
+#include <thread> // thread
 
 namespace communication { 
 
@@ -10,7 +11,7 @@ using boost::asio::ip::udp;
 
 class UDPServer {
 public:
-    UDPServer(boost::asio::io_context& a_io_context, std::string const& a_ip, int32_t a_port);
+    UDPServer(std::string const& a_ip, int32_t a_port);
     ~UDPServer();
 
     void start_listening(std::function<void(std::string const&, ssize_t)> a_callback);
@@ -18,7 +19,8 @@ public:
 
 private:
     void do_receive();
-    
+    boost::asio::io_context m_context;
+    std::thread m_handler;    
     udp::socket m_socket;
     udp::endpoint m_sender_endpoint;
     char m_recv_buffer[4096];
