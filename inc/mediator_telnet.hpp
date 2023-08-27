@@ -13,7 +13,7 @@
 #include <tuple> // tuple
 #include <nlohmann/json.hpp> // nlhomann::json::iterator
 #include <thread> // listener thread
-#include <atomic> // atomic flaot
+#include <atomic> // atomic float
 
 //TODO: map of atomic floats
 
@@ -37,7 +37,7 @@ private:
     void update_map(std::string const& a_message, ssize_t a_len);
     
 private:
-    concurrency::BlockingMap<std::string, std::atomic<float>> m_variables;
+    concurrency::BlockingMap<std::string, std::tuple<std::string,std::atomic<float>>> m_variables;
     //TODO: in the future abstract Client class
     std::mutex m_mtx;
     communication::UDPServer m_server;
