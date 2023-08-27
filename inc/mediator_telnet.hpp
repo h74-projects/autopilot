@@ -1,13 +1,6 @@
 #ifndef MEDIATOR_TELNET_HPP
 #define MEDIATOR_TELNET_HPP
 
-//style guide:
-// int = "int"
-// double = "double"
-// float = "float"
-// bool = "bool"
-// int32_t = "int32_t"
-
 #include "mediator.hpp"
 #include "blocking_map.hpp"
 #include "var.hpp"
@@ -21,11 +14,14 @@
 #include <nlohmann/json.hpp> // nlhomann::json::iterator
 #include <thread> // listener thread
 
+//TODO: map of atomic floats
+
 namespace fgear {
 
 class TelnetMediator : public Mediator {
 public:
-    TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port);
+    //TODO: they're using the same address!
+    TelnetMediator(std::string const & a_address, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port);
     ~TelnetMediator();
 
     void set(std::string const& a_key ,float const& a_var) override;
@@ -46,7 +42,6 @@ private:
     concurrency::BlockingMap<std::string, std::tuple<std::string, float>> m_variables;
     //TODO: in the future abstract Client class
     std::mutex m_mtx;
-    boost::asio::io_context m_context;
     communication::UDPServer m_server;
     TelnetClient m_telnet;
     bool m_active;

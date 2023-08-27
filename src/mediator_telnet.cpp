@@ -20,18 +20,12 @@ namespace {
 
 //TODO: load map from file
 TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port)
-: m_server{m_context, a_server_ip, a_udp_port}
+: m_server{a_server_ip, a_udp_port}
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
     fill_map("../../files/map_values.json");
     m_listener.push_back(std::thread{[this]{get_updates();}});
-    m_listener.push_back(std::thread{[this]() {
-        while(m_active) {
-            m_context.run();
-        }
-    }});
-
 }
 
 TelnetMediator::~TelnetMediator()
@@ -95,6 +89,7 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
         float& curr = std::get<1>(m_variables.at(name));
+        //TODO: maybe don't need check
         if ( value != curr) {
             curr = value;
         }
