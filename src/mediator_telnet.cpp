@@ -18,13 +18,12 @@ namespace {
 
 } // namespace
 
-//TODO: load map from file
-TelnetMediator::TelnetMediator(std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port)
+TelnetMediator::TelnetMediator(std::string const & a_file_name, std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port)
 : m_server{a_server_ip, a_udp_port}
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
-    fill_map("../../files/map_values.json");
+    fill_map(a_file_name);
     get_updates();
 }
 
@@ -48,7 +47,7 @@ float TelnetMediator::get(std::string const& a_key)
 
 std::string TelnetMediator::make_command(std::string const& a_key ,float const& a_var, std::string const& a_command)
 {
-    std::string return_command = a_command + ' ' + a_key + ' ' + std::to_string(a_var) + "\015\012";
+    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ' + std::to_string(a_var) + "\015\012";
     return return_command;  
 }
 
@@ -72,7 +71,6 @@ void TelnetMediator::get_updates()
 {
     auto lambda = [this](const std::string& data, ssize_t size) {
             update_map(data, size);
-            std::cout << data;
     };
     m_server.start_listening(lambda);
 }
@@ -85,10 +83,7 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
     while (end_index <= a_message.size()) {
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
-        //TODO: maybe don't need check
-        if ( value != std::get<1>(m_variables.at(name))) {
-            std::get<1>(m_variables.at(name)) = value;
-        }
+        std::get<1>(m_variables.at(name)) = value;
         name_index = end_index + 1;
         value_index = a_message.find(":", name_index) + 1;
         end_index = a_message.find(",", name_index);
