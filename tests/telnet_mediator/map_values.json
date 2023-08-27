@@ -1,5 +1,5 @@
 { 
-    "airspeed-indicator_indicated-speed-kt": {
+    "/instrumentation/airspeed-indicator/indicated-speed-kt": {
     	"node": "/instrumentation/airspeed-indicator/indicated-speed-kt",
     	"name": "airspeed-indicator_indicated-speed-kt",
 		"type": "float",
@@ -172,7 +172,7 @@
     },
 
 	"/controls/engines/engine/throttle": {
-    	"node": "/controls/engines/engine/throttle",
+    	"node": "/controls/engines/engine[0]/throttle",
     	"name": "engine_throttle",
 		"type": "float",
 		"format": "%f"
@@ -222,7 +222,7 @@
     },
 
 	"/controls/engines/engine/primer": {
-    	"node": "/controls/engines/engine/primer",
+    	"node": "/controls/engines/engine[0]/primer",
     	"name": "engine_primer",
 		"type": "float",
 		"format": "%f"
@@ -250,10 +250,12 @@
     },
 
 	"/engines/engine/rpm": {
-    	"node": "/engines/engine/rpm",
+    	"node": "/engines/engine[0]/rpm",
     	"name": "engine_rpm",
 		"type": "float",
 		"format": "%f"
     }
+
+	
 
 }

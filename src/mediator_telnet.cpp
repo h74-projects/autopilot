@@ -42,12 +42,12 @@ void TelnetMediator::set(std::string const& a_key ,float const& a_var)
 
 float TelnetMediator::get(std::string const& a_key)
 {
-    return std::get<1>(m_variables.at(a_key)).load();
+    return m_variables.at(a_key).load();
 }
 
 std::string TelnetMediator::make_command(std::string const& a_key ,float const& a_var, std::string const& a_command)
 {
-    std::string return_command = a_command + ' ' + std::get<0>(m_variables.at(a_key)) + ' ' + std::to_string(a_var) + "\015\012";
+    std::string return_command = a_command + ' ' + a_key + ' ' + std::to_string(a_var) + "\015\012";
     return return_command;  
 }
 
@@ -62,7 +62,7 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     auto begin = data.begin();
     auto end = data.end();
     while (begin != end) {
-        m_variables[begin.value()["name"]] = std::make_tuple(begin.value()["node"], float{});
+        m_variables[begin.value()["node"]] = float{};
         ++begin;
     }
 }
@@ -83,7 +83,9 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
     while (end_index <= a_message.size()) {
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
-        std::get<1>(m_variables.at(name)) = value;
+        if (m_variables.at(name) != value) {
+            m_variables[name] = value;
+        }
         name_index = end_index + 1;
         value_index = a_message.find(":", name_index) + 1;
         end_index = a_message.find(",", name_index);
