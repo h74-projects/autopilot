@@ -62,7 +62,7 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     auto begin = data.begin();
     auto end = data.end();
     while (begin != end) {
-        m_variables[begin.value()["node"]] = float{};
+        m_variables[begin.value()["node"]].store(float{});
         ++begin;
     }
 }
@@ -83,8 +83,10 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
     while (end_index <= a_message.size()) {
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
-        if (m_variables.at(name) != value) {
-            m_variables[name] = value;
+        std::cout << "\nnew value is: " << value << '\n';
+        std::cout << "\ncurr value is: " << m_variables.at(name).load() << '\n';
+        if (m_variables.at(name).load() != value) {
+            m_variables.at(name).exchange(value);
         }
         name_index = end_index + 1;
         value_index = a_message.find(":", name_index) + 1;
