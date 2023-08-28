@@ -80,11 +80,9 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
     size_t name_index{};
     size_t value_index = a_message.find(":") + 1;
     size_t end_index = a_message.find(",");
-    while (end_index <= a_message.size()) {
+    while (value_index <= a_message.size()) {
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
-        std::cout << "\nnew value is: " << value << '\n';
-        std::cout << "\ncurr value is: " << m_variables.at(name).load() << '\n';
         if (m_variables.at(name).load() != value) {
             m_variables.at(name).exchange(value);
         }
