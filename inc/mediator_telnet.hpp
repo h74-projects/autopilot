@@ -11,7 +11,6 @@
 #include <cstdint> // int32_t
 #include <mutex> // mutex
 #include <tuple> // tuple
-#include <nlohmann/json.hpp> // nlhomann::json::iterator
 #include <thread> // listener thread
 #include <atomic> // atomic float
 

@@ -53,17 +53,21 @@ std::string TelnetMediator::make_command(std::string const& a_key ,float const& 
 
 void TelnetMediator::fill_map(std::string const& a_filename)
 {
-    std::fstream file(a_filename);
-    if (not file.is_open()) {
-        throw std::runtime_error("could not open file");
+    pugi::xml_document doc;
+    if (!doc.load_file(a_filename.c_str())) {
+        throw std::runtime_error("failed to load");
     }
+    
+    for (pugi::xpath_node chunk_node : doc.select_nodes("/PropertyList/generic/output/chunk")) {
+        pugi::xml_node node = chunk_node.node();
+        std::string name = node.child_value("name");
+        std::string type = node.child_value("type");
+        std::string format = node.child_value("format");
+        std::string node_path = node.child_value("node");
 
-    nlohmann::json data = nlohmann::json::parse(file);
-    auto begin = data.begin();
-    auto end = data.end();
-    while (begin != end) {
-        m_variables[begin.value()["node"]].store(float{});
-        ++begin;
+        if (!name.empty() && !type.empty() && !format.empty() && !node_path.empty()) {
+            m_variables[node_path].store(float{});
+        }
     }
 }
 
@@ -84,7 +88,7 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
         std::string name = a_message.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_message.substr(value_index, end_index - value_index));
         if (m_variables.at(name).load() != value) {
-            m_variables.at(name).exchange(value);
+            m_variables.at(name).store(value);
         }
         name_index = end_index + 1;
         value_index = a_message.find(":", name_index) + 1;
