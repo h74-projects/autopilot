@@ -52,8 +52,10 @@ private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_variables;
     //TODO: in the future abstract Client class
     mutable std::mutex m_mtx;
+    boost::asio::io_context m_context;
     communication::UDPServer m_server;
     TelnetClient m_telnet;
+    std::vector<std::thread> m_listener;
     bool m_active;
 };
 

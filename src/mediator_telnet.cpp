@@ -7,7 +7,6 @@
 #include <algorithm> // remove if
 #include <boost/algorithm/string.hpp> // erase all
 
-
 //TODO: exception handling
 
 constexpr uint32_t TIME_OUT = 500;
@@ -19,7 +18,7 @@ namespace {
 } // namespace
 
 TelnetMediator::TelnetMediator(std::string const & a_file_name, std::string const & a_server_ip, std::string const & a_telnet_ip, uint32_t const& a_telnet_port, int32_t const& a_udp_port)
-: m_server{a_server_ip, a_udp_port}
+: m_server{m_context,a_server_ip, a_udp_port}
 , m_telnet{a_telnet_ip, a_telnet_port,TIME_OUT}
 , m_active{true}
 {
@@ -30,6 +29,8 @@ TelnetMediator::TelnetMediator(std::string const & a_file_name, std::string cons
 TelnetMediator::~TelnetMediator()
 {
     m_active = false;
+    m_server.stop_listening();
+    // m_listener.join();
 
 }
 
@@ -60,12 +61,9 @@ void TelnetMediator::fill_map(std::string const& a_filename)
     
     for (pugi::xpath_node chunk_node : doc.select_nodes("/PropertyList/generic/output/chunk")) {
         pugi::xml_node node = chunk_node.node();
-        std::string name = node.child_value("name");
-        std::string type = node.child_value("type");
-        std::string format = node.child_value("format");
         std::string node_path = node.child_value("node");
 
-        if (!name.empty() && !type.empty() && !format.empty() && !node_path.empty()) {
+        if (!node_path.empty()) {
             m_variables[node_path].store(float{});
         }
     }
@@ -74,9 +72,12 @@ void TelnetMediator::fill_map(std::string const& a_filename)
 void TelnetMediator::get_updates()
 {
     auto lambda = [this](const std::string& data, ssize_t size) {
+            // std::unique_lock lock{m_mtx};
+            std::cout << "\ncheck\n";
             update_map(data, size);
     };
     m_server.start_listening(lambda);
+    m_listener.push_back(std::thread{[this]{m_context.run();}});
 }
 
 void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)

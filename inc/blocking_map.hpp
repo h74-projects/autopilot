@@ -27,12 +27,14 @@ public:
 
     bool contains(K const& a_key) const noexcept;
 
+    void print() const;
+
 private:
     std::unordered_map<K, V> m_map;
     //TODO: decide if necessary
     //std::condition_variable m_cv;
     
-    std::mutex m_mtx;
+    mutable std::mutex m_mtx;
 };
 
 } // namespace concurrency
