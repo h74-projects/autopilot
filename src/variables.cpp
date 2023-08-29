@@ -17,8 +17,6 @@ bool compare_floats(float a_first, float a_second)
 
 } // namespace
 
-
-
 void Variables::insert(std::string const& a_key, float a_value)
 {
     if (m_map.contains(a_key)) {
@@ -38,7 +36,6 @@ void Variables::exchange_if(std::string const& a_key, float a_value)
         m_map.at(a_key).exchange(a_value);
     }
 }
-
 
 float Variables::get(std::string const& a_key)
 {
