@@ -9,6 +9,7 @@
 
 #include <vector> // socketBuff
 #include <atomic> // atomic bool
+#include <thread> // std::thread
 
 namespace fgear {
 
@@ -34,7 +35,8 @@ private:
 
 private:
     Poco::Net::DatagramSocket m_socket;
-    Poco::Net::SocketBufVec m_buffer;
+    char m_buffer[BUFFER_SIZE];
+    std::thread m_listener;
     std::atomic_bool m_listening;
 
 

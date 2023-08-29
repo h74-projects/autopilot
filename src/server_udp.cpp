@@ -14,4 +14,22 @@ void UdpServer::connect(std::string const& a_address)
     m_socket.connect(sock_adr);
 }
 
+void UdpServer::start_listening()
+{
+    m_listening = true;
+    m_listener = std::thread{[this]{recieve_data();}};
+}
+
+void UdpServer::recieve_data()
+{
+    while(m_listening) {
+        Poco::Net::SocketAddress sock_adr{};
+        int recieved_bytes = m_socket.receiveFrom(reinterpret_cast<void*>(m_buffer), BUFFER_SIZE, sock_adr);
+        if (recieved_bytes > 0) {
+            std::string message{m_buffer, recieved_bytes};
+            m_protocol.get()->unpack(message);
+        }
+    }
+}
+
 } // namespace fgear
