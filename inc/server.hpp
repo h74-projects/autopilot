@@ -21,7 +21,7 @@ protected:
     Server(Server const&) = default;
     Server& operator=(Server const&) = default;
 
-private:
+protected:
     std::shared_ptr<Protocol> m_protocol;
     uint32_t m_port;
 };
