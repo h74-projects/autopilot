@@ -222,7 +222,7 @@
     },
 
 	"/controls/engines/engine/primer": {
-    	"node": "/controls/engines/engine[0]/primer",
+    	"node": "/controls/engines/engine/primer",
     	"name": "engine_primer",
 		"type": "float",
 		"format": "%f"
@@ -250,7 +250,7 @@
     },
 
 	"/engines/engine/rpm": {
-    	"node": "/engines/engine[0]/rpm",
+    	"node": "/engines/engine/rpm",
     	"name": "engine_rpm",
 		"type": "float",
 		"format": "%f"

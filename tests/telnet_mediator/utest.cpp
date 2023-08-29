@@ -13,8 +13,7 @@ void udpCallback(const std::string& data, ssize_t size) {
 
 BEGIN_TEST(basic_test)
     int32_t server_port = 49002;
-    TelnetMediator mediator{"map_values.json","127.0.0.1","127.0.0.1", 5401, server_port};
-    TelnetClient client{"127.0.0.1", 5401, 1000};
+    TelnetMediator mediator{"generic_small.xml","127.0.0.1","127.0.0.1", 5401, server_port};
     mediator.set("/controls/switches/magnetos", 3);
     mediator.set("/controls/engines/current-engine/throttle", 0.2);
     mediator.set("/controls/engines/current-engine/mixture", 0.949);
@@ -22,15 +21,15 @@ BEGIN_TEST(basic_test)
     mediator.set("/controls/switches/master-alt", 1);
     mediator.set("/controls/switches/master-avionics", 1);
     mediator.set("/sim/model/c172p/brake-parking", 0);
-    mediator.set("/controls/engines/engine[0]/primer", 3);
+    mediator.set("/controls/engines/engine/primer", 3);
     mediator.set("/controls/switches/starter", 1);
     mediator.set("/engines/active-engine/auto-start", 1);
-    std::cout << "\nengine rpm is: " << mediator.get("/engines/engine[0]/rpm");
-    mediator.set("/engines/engine[0]/rpm", 800);
+    std::cout << "\nengine rpm is: " << mediator.get("/engines/engine/rpm");
+    mediator.set("/engines/engine/rpm", 800);
     
     ::usleep(250*1000);
-    while (mediator.get("/engines/engine[0]/rpm") < 750) {
-        std::cout << "\nengine rpm is: " << mediator.get("/engines/engine[0]/rpm");
+    while (mediator.get("/engines/engine/rpm") < 750) {
+        std::cout << "\nengine rpm is: " << mediator.get("/engines/engine/rpm");
         ::usleep(250*1000);
     }
     float h0 = mediator.get("/instrumentation/heading-indicator/offset-deg"); 

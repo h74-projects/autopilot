@@ -18,7 +18,7 @@ BEGIN_TEST(udp_communication_test)
 
     // Start the UDP server
     int32_t serverPort = 5500; // Adjust the port if needed
-    UDPServer udpServer(io_context, "127.0.0.1", serverPort);
+    UDPServer udpServer(io_context,"127.0.0.1", serverPort);
 
     // Use a flag to indicate when the server has received data
     bool dataReceived = false;
@@ -54,7 +54,6 @@ BEGIN_TEST(udp_communication_test)
 END_TEST
 
 TEST_SUITE(因果応報 [inga ōhō: bad causes bring bad results])
-
     TEST(udp_communication_test)
 
 END_SUITE
