@@ -7,6 +7,13 @@ UdpServer::UdpServer(std::shared_ptr<Protocol> a_protocol, uint32_t const& a_por
 {
 }
 
+UdpServer::~UdpServer()
+{
+    m_listening = false;
+    m_listener.join();
+    m_socket.close();
+}
+
 void UdpServer::connect(std::string const& a_address)
 {
     Poco::Net::SocketAddress sock_adr{a_address, m_port};
@@ -28,6 +35,8 @@ void UdpServer::recieve_data()
         if (recieved_bytes > 0) {
             std::string message{m_buffer, recieved_bytes};
             m_protocol.get()->unpack(message);
+        } else {
+            throw std::runtime_error("could not recieve message");
         }
     }
 }
