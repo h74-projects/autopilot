@@ -12,17 +12,18 @@ class Server {
 public:
     virtual ~Server() = default;
 
-    virtual void connect(std::string const& a_address, uint32_t const& a_port) = 0;
+    virtual void connect(std::string const& a_address) = 0;
 
     virtual void start_listening() = 0;
 
 protected:
-    Server(std::shared_ptr<Protocol> a_protocol) : m_protocol{a_protocol}{};
+    Server(std::shared_ptr<Protocol> a_protocol, uint32_t const& a_port) : m_protocol{a_protocol}, m_port{a_port}{};
     Server(Server const&) = default;
     Server& operator=(Server const&) = default;
 
 private:
     std::shared_ptr<Protocol> m_protocol;
+    uint32_t m_port;
 };
 
 } // namespace fgear
