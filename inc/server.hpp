@@ -14,15 +14,14 @@ public:
 
     virtual void connect(std::string const& a_address) = 0;
 
-    virtual void start_listening() = 0;
+    virtual void start_listening(std::shared_ptr<Protocol> a_protocol) = 0;
 
 protected:
-    Server(std::shared_ptr<Protocol> a_protocol, uint32_t const& a_port) : m_protocol{a_protocol}, m_port{a_port}{};
+    Server(uint32_t const& a_port) : m_port{a_port}{};
     Server(Server const&) = default;
     Server& operator=(Server const&) = default;
 
 protected:
-    std::shared_ptr<Protocol> m_protocol;
     uint32_t m_port;
 };
 

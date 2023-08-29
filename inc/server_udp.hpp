@@ -17,7 +17,7 @@ constexpr size_t BUFFER_SIZE = 4096;
 
 class UdpServer : public Server {
 public:
-    UdpServer(std::shared_ptr<Protocol> a_protocol, uint32_t const& a_port);
+    UdpServer(uint32_t const& a_port);
     ~UdpServer();
 
     UdpServer(UdpServer const&) = delete;
@@ -28,10 +28,10 @@ public:
 
     void connect(std::string const& a_address = "127.0.0.1") override;
 
-    void start_listening() override;
+    void start_listening(std::shared_ptr<Protocol> a_protocol) override;
 
 private:
-    void recieve_data();
+    void recieve_data(std::shared_ptr<Protocol> a_protocol);
 
 private:
     Poco::Net::DatagramSocket m_socket;
