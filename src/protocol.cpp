@@ -12,7 +12,7 @@ void Protocol::unpack(std::string const& a_package)
     size_t name_index{};
     size_t value_index = a_package.find(":") + 1;
     size_t end_index = a_package.find(",");
-    while (value_index <= a_package.size()) {
+    while (end_index != std::string::npos) {
         std::string name = a_package.substr(name_index, value_index - 1 - name_index);
         float value = std::stof(a_package.substr(value_index, end_index - value_index));
         m_variables.get()->exchange_if(name, value);
@@ -20,7 +20,7 @@ void Protocol::unpack(std::string const& a_package)
         value_index = a_package.find(":", name_index) + 1;
         end_index = a_package.find(",", name_index);
         name.clear();
-    }    
+    }
 }
 
 } // namespace fgear
