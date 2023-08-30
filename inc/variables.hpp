@@ -27,6 +27,7 @@ public:
 
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;
+    mutable std::mutex m_tx;
     // concurrency::BlockingMap<std::string, float> m_map;
 };
 
