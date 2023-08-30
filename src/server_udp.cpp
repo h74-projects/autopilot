@@ -4,6 +4,7 @@ namespace fgear {
 
 UdpServer::UdpServer(uint16_t const& a_port)
 : Server{a_port}
+, m_listening{false}
 {
 }
 
@@ -18,6 +19,7 @@ void UdpServer::connect(std::string const& a_address)
     Poco::Net::SocketAddress sock_adr{a_address, m_port};
     m_socket.bind(sock_adr);
     m_socket.connect(sock_adr);
+    m_socket.setBlocking(false);
 }
 
 void UdpServer::start_listening(std::shared_ptr<Protocol> a_protocol)
@@ -48,8 +50,6 @@ void UdpServer::recieve_data(std::shared_ptr<Protocol> a_protocol)
         if (recieved_bytes > 0) {
             std::string message{m_buffer, static_cast<size_t>(recieved_bytes)};
             a_protocol.get()->unpack(message);
-        } else {
-            throw std::runtime_error("could not recieve message");
         }
     }
 }
