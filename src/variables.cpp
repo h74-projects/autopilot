@@ -12,7 +12,7 @@ namespace {
 bool compare_floats(float a_first, float a_second)
 {
     constexpr float EPSILON = 0.0000001;
-    return std::abs(a_first - a_second) > EPSILON;
+    return std::abs(a_first - a_second) <= EPSILON;
 }
 
 } // namespace
