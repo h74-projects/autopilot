@@ -18,8 +18,8 @@ void UdpServer::connect(std::string const& a_address)
 {
     Poco::Net::SocketAddress sock_adr{a_address, m_port};
     m_socket.bind(sock_adr);
-    m_socket.connect(sock_adr);
-    m_socket.setBlocking(false);
+    // m_socket.connect(sock_adr);
+    // m_socket.setBlocking(false);
 }
 
 void UdpServer::start_listening(std::shared_ptr<Protocol> a_protocol)
@@ -37,8 +37,10 @@ void UdpServer::start_listening(std::shared_ptr<Protocol> a_protocol)
 void UdpServer::stop_listening()
 {
     if (m_listening) {
-        m_listening = false;
-        m_listener.join();        
+        m_listening = false;        
+        if (m_listener.joinable()) {
+            m_listener.join();        
+        }
     }
 }
 
@@ -46,10 +48,12 @@ void UdpServer::recieve_data(std::shared_ptr<Protocol> a_protocol)
 {
     while(m_listening) {
         Poco::Net::SocketAddress sock_adr{};
-        int recieved_bytes = m_socket.receiveFrom(reinterpret_cast<void*>(m_buffer), BUFFER_SIZE, sock_adr);
-        if (recieved_bytes > 0) {
-            std::string message{m_buffer, static_cast<size_t>(recieved_bytes)};
-            a_protocol.get()->unpack(message);
+        if (m_socket.poll(POLLING_TIME_OUT,1)) {
+            int recieved_bytes = m_socket.receiveFrom(reinterpret_cast<void*>(m_buffer), BUFFER_SIZE, sock_adr);
+            if (recieved_bytes > 0) {
+                std::string message{m_buffer, static_cast<size_t>(recieved_bytes)};
+                a_protocol.get()->unpack(message);
+            }
         }
     }
 }

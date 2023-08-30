@@ -14,6 +14,8 @@
 namespace fgear {
 
 constexpr size_t BUFFER_SIZE = 4096;
+//TODO: make timeout customizable
+constexpr size_t POLLING_TIME_OUT = 200'000;
 
 class UdpServer : public Server {
 public:
