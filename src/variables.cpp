@@ -11,14 +11,15 @@ namespace {
 
 bool compare_floats(float a_first, float a_second)
 {
-    constexpr float EPSILON = 0.0000001;
-    return std::abs(a_first - a_second) <= EPSILON;
+    constexpr float EPSILON = 0.00000001f;
+    return std::abs(a_first - a_second) > EPSILON;
 }
 
 } // namespace
 
 void Variables::insert(std::string const& a_key, float a_value)
 {
+    std::unique_lock lock{m_tx};
     if (m_map.contains(a_key)) {
         throw std::invalid_argument("key already exists");
     }
@@ -32,8 +33,9 @@ void Variables::set(std::string const& a_key, float a_value)
 
 void Variables::exchange_if(std::string const& a_key, float a_value)
 {
+    std::unique_lock lock{m_tx};
     if(compare_floats(m_map.at(a_key).load(), a_value)) {
-        m_map.at(a_key).exchange(a_value);
+        m_map.at(a_key).store(a_value);
     }
 }
 
