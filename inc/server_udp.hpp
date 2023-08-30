@@ -17,7 +17,7 @@ constexpr size_t BUFFER_SIZE = 4096;
 
 class UdpServer : public Server {
 public:
-    UdpServer(uint32_t const& a_port);
+    explicit UdpServer(uint16_t const& a_port);
     ~UdpServer();
 
     UdpServer(UdpServer const&) = delete;
