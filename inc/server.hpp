@@ -16,6 +16,8 @@ public:
 
     virtual void start_listening(std::shared_ptr<Protocol> a_protocol) = 0;
 
+    virtual void stop_listening() = 0;
+
 protected:
     explicit Server(uint16_t const& a_port) : m_port{a_port}{};
     Server(Server const&) = default;

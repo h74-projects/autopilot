@@ -30,6 +30,8 @@ public:
 
     void start_listening(std::shared_ptr<Protocol> a_protocol) override;
 
+    void stop_listening();
+
 private:
     void recieve_data(std::shared_ptr<Protocol> a_protocol);
 
@@ -38,7 +40,6 @@ private:
     char m_buffer[BUFFER_SIZE];
     std::thread m_listener;
     std::atomic_bool m_listening;
-
 
 };
 

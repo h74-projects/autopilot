@@ -9,8 +9,7 @@ UdpServer::UdpServer(uint16_t const& a_port)
 
 UdpServer::~UdpServer()
 {
-    m_listening = false;
-    m_listener.join();
+    stop_listening();
     m_socket.close();
 }
 
@@ -23,11 +22,22 @@ void UdpServer::connect(std::string const& a_address)
 
 void UdpServer::start_listening(std::shared_ptr<Protocol> a_protocol)
 {
+    if (m_listening) {
+        throw std::invalid_argument("server already listening");
+    }
     auto lambda = [this](std::shared_ptr<Protocol> protocol) {
         recieve_data(protocol);
     };
     m_listening = true;
     m_listener = std::thread{lambda, a_protocol};
+}
+
+void UdpServer::stop_listening()
+{
+    if (m_listening) {
+        m_listening = false;
+        m_listener.join();        
+    }
 }
 
 void UdpServer::recieve_data(std::shared_ptr<Protocol> a_protocol)
