@@ -4,7 +4,7 @@
 #include "protocol.hpp"
 
 #include <memory> // shared ptr
-#include <cstdint> // uint32_t
+#include <cstdint> // uint16_t
 
 namespace fgear {
 
@@ -17,12 +17,12 @@ public:
     virtual void start_listening(std::shared_ptr<Protocol> a_protocol) = 0;
 
 protected:
-    Server(uint32_t const& a_port) : m_port{a_port}{};
+    explicit Server(uint16_t const& a_port) : m_port{a_port}{};
     Server(Server const&) = default;
     Server& operator=(Server const&) = default;
 
 protected:
-    uint32_t m_port;
+    uint16_t m_port;
 };
 
 } // namespace fgear
