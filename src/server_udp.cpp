@@ -49,7 +49,7 @@ void UdpServer::recieve_data(std::shared_ptr<Protocol> a_protocol)
     while(m_listening) {
         Poco::Net::SocketAddress sock_adr{};
         if (m_socket.poll(POLLING_TIME_OUT,1)) {
-            int recieved_bytes = m_socket.receiveFrom(reinterpret_cast<void*>(m_buffer), BUFFER_SIZE, sock_adr);
+            int recieved_bytes = m_socket.receiveFrom(reinterpret_cast<void*>(m_buffer), 4096, sock_adr);
             if (recieved_bytes > 0) {
                 std::string message{m_buffer, static_cast<size_t>(recieved_bytes)};
                 a_protocol.get()->unpack(message);

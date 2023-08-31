@@ -7,8 +7,6 @@
 
 namespace fgear {
 
-constexpr size_t BUFFER_SIZE = 4096;
-
 class TelnetClient : public Client {
 public:
     TelnetClient();
@@ -27,7 +25,7 @@ public:
 
 private:
     Poco::Net::DialogSocket m_socket;
-    char m_buffer[BUFFER_SIZE];
+    char m_buffer[4906];
     bool m_connected;
 
 };

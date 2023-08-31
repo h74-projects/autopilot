@@ -36,7 +36,7 @@ bool TelnetClient::send(std::string const& a_message)
 
 std::string TelnetClient::recieve() 
 {
-    int len = m_socket.receiveRawBytes(reinterpret_cast<void*>(m_buffer), BUFFER_SIZE);
+    int len = m_socket.receiveRawBytes(reinterpret_cast<void*>(m_buffer), 4096);
     if (len < 0) {
         throw std::runtime_error("could not recieve message");
     }

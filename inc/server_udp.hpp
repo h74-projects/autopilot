@@ -13,8 +13,6 @@
 
 namespace fgear {
 
-constexpr size_t BUFFER_SIZE = 4096;
-//TODO: make timeout customizable
 constexpr size_t POLLING_TIME_OUT = 200'000;
 
 class UdpServer : public Server {
@@ -39,7 +37,7 @@ private:
 
 private:
     Poco::Net::DatagramSocket m_socket;
-    char m_buffer[BUFFER_SIZE];
+    char m_buffer[4096];
     std::thread m_listener;
     std::atomic_bool m_listening;
 
