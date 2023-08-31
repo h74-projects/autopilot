@@ -16,7 +16,7 @@ namespace fgear {
 class MiddleMan {
 public:
     // frequency in milliseconds
-    MiddleMan(std::unique_ptr<Client>&& a_client, uint64_t const& a_frequency);
+    MiddleMan(std::unique_ptr<Client>&& a_client, uint16_t a_port, std::string const& a_address = "127.0.0.1", uint64_t const& a_frequency = 250);
     ~MiddleMan();
 
     void send_message(std::string const& a_message);
@@ -30,6 +30,7 @@ private:
     std::chrono::time_point<std::chrono::steady_clock> m_elapsed;
     std::atomic_bool m_active;
     std::thread m_listener;
+    uint64_t m_frequency;
 };
 
 } // namespace fgear
