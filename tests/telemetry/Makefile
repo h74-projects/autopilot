@@ -11,10 +11,10 @@ SOURCES_DIR = ../../src
 
 LDFLAGS= -I/usr/local/include/Poco
 
-OBJS = utest.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/telnet_client.o
+OBJS = utest.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o
 TARGET = utest
 
-LDLIBS = -lpthread -L/usr/local/lib/poco -lPocoNet -lPocoFoundation -lpugixml
+LDLIBS = -lpthread -lPocoFoundation -lPocoNet -lpugixml -L/usr/local/lib
 
 all: $(TARGET)
 
@@ -34,6 +34,9 @@ clean:
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET) $(LDLIBS)
 
+lib:
+	export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
 utest.o: $(INCLUDES_DIR)/mu_test.h
 
 .PHONY: all check recheck clang_check clean
@@ -47,4 +50,6 @@ $(SOURCES_DIR)/server_udp.o: $(INCLUDES_DIR)/server.hpp $(INCLUDES_DIR)/server_u
 
 $(SOURCES_DIR)/variables.o: $(INCLUDES_DIR)/variables.hpp $(INCLUDES_DIR)/blocking_map.hpp
 
-$(SOURCES_DIR)/telnet_client.o: $(INCLUDES_DIR)/telnet_client.hpp
+$(SOURCES_DIR)/client_telnet.o: $(INCLUDES_DIR)/client.hpp $(INCLUDES_DIR)/client_telnet.hpp
+
+$(SOURCES_DIR)/middle_man.o: $(INCLUDES_DIR)/middle_man.hpp $(INCLUDES_DIR)/blocking_map.hpp

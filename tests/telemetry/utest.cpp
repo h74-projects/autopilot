@@ -1,6 +1,7 @@
 #include "mu_test.h"
 #include "telemetry.hpp"
-#include "mediator_telnet.hpp"
+#include "middle_man.hpp"
+#include "client_telnet.hpp"
 #include "server_udp.hpp"
 #include "pugixml.hpp" // for xml file
 
@@ -26,20 +27,69 @@ void fill_map(std::string const& a_filename, fgear::Variables& a_variables)
 
 BEGIN_TEST(basic_test)
     using namespace fgear;
-    std::shared_ptr<Variables> variables;
+    std::shared_ptr<Variables> variables = std::make_shared<Variables>();
     fill_map("generic_small.xml", *variables);
     std::shared_ptr<Protocol> protocol{std::make_shared<Protocol>(variables)};
-    TelnetClient client{"127.0.0.1", 5401, 500};
-    Telemetry telemetry{protocol, std::make_unique<UdpServer>(49002)};
-    client.send("set /controls/switches/magnetos 3\015\012");
-    ::sleep(1);
+    TelnetClient client;
+    client.connect("127.0.0.1", 5401);
+    Telemetry telemetry{protocol, std::make_unique<UdpServer>(49002), "127.0.0.1"};
+    telemetry.run_telemetry();
+    client.send("set /controls/engines/current-engine/mixture 0.949");
+    ::sleep(2);
+    float mixture = variables.get()->get("/controls/engines/current-engine/mixture");
+    std::cout << "\nmixture is: " << mixture << '\n';
+    ASSERT_THAT(std::abs(mixture - 0.949) < 0.00000001f);
+
+END_TEST
+
+BEGIN_TEST(server_test)
+    using namespace fgear;
+    std::shared_ptr<Variables> variables = std::make_shared<Variables>();
+    fill_map("generic_small.xml", *variables);
+    std::shared_ptr<Protocol> protocol{std::make_shared<Protocol>(variables)};
+    UdpServer server{49002};
+    server.connect();
+    server.start_listening(protocol);
+    ::sleep(30);
+    float mixture = variables.get()->get("/controls/engines/current-engine/mixture");
+    std::cout << "\nmixture is: " << mixture << '\n';
+    ASSERT_THAT(std::abs(mixture - 0.949) < 0.00000001f);    
+
+
+END_TEST
+
+
+BEGIN_TEST(middle_man_test)
+    using namespace fgear;
+    std::shared_ptr<Variables> variables = std::make_shared<Variables>();
+    fill_map("generic_small.xml", *variables);
+    std::shared_ptr<Protocol> protocol{std::make_shared<Protocol>(variables)};
+    MiddleMan middleman(std::make_unique<TelnetClient>(), 5401);
+    Telemetry telemetry{protocol, std::make_unique<UdpServer>(49002), "127.0.0.1"};
+    telemetry.run_telemetry();
+    middleman.send_message("set /controls/engines/current-engine/throttle 0.2");
+    middleman.send_message("set /controls/flight/rudder 1");
+    middleman.send_message("set /controls/flight/aileron 1");
+    middleman.send_message("set /controls/switches/magnetos 3");
+    middleman.send_message("set /controls/engines/current-engine/mixture 0.949");
+    ::sleep(3);
+    float throttle = variables.get()->get("/controls/engines/current-engine/throttle");
+    float rudder = variables.get()->get("/controls/flight/rudder");
+    float aileron = variables.get()->get("/controls/flight/aileron");
     float magnetos = variables.get()->get("/controls/switches/magnetos");
-    std::cout << "\nmagnetos is: " << magnetos << '\n';
-    ASSERT_THAT(std::abs(magnetos - 3) >= 0.00000001f);
+    float mixture = variables.get()->get("/controls/engines/current-engine/mixture");
+    ASSERT_THAT(std::abs(throttle - 0.2) < 0.00000001f);   
+    ASSERT_THAT(std::abs(rudder - 1) < 0.00000001f);   
+    ASSERT_THAT(std::abs(aileron - 1) < 0.00000001f);   
+    ASSERT_THAT(std::abs(magnetos - 3) < 0.00000001f);   
+    ASSERT_THAT(std::abs(mixture - 0.949) < 0.00000001f);   
+
 
 END_TEST
 
 BEGIN_SUITE("tel me why")
-    TEST(basic_test)
+    IGNORE_TEST(basic_test)
+    IGNORE_TEST(server_test)
+    TEST(middle_man_test)
 
 END_SUITE
