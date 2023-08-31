@@ -37,6 +37,11 @@ void MiddleMan::handle_messages()
             m_messages.dequeue(message);
             m_client.get()->send(message);
             m_elapsed = std::chrono::steady_clock::now();
+            
+            if (not m_messages.empty()) {
+                std::chrono::milliseconds timespan(m_frequency);
+                std::this_thread::sleep_for(timespan);
+            }
         }
     }
 }
