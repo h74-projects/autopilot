@@ -23,10 +23,13 @@ public:
     void exchange_if(std::string const& a_key, float a_value);
 
     //get existing element
-    float get(std::string const& a_key);
+    float get(std::string const& a_key) const;
+
+    size_t size() const noexcept;
 
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;
+    size_t m_items = 0;
     mutable std::mutex m_tx;
     // concurrency::BlockingMap<std::string, float> m_map;
 };

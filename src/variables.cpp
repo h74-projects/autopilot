@@ -24,6 +24,7 @@ void Variables::insert(std::string const& a_key, float a_value)
         throw std::invalid_argument("key already exists");
     }
     m_map[a_key].store(a_value);
+    ++m_items;
 }
 
 void Variables::set(std::string const& a_key, float a_value)
@@ -39,9 +40,15 @@ void Variables::exchange_if(std::string const& a_key, float a_value)
     }
 }
 
-float Variables::get(std::string const& a_key)
+float Variables::get(std::string const& a_key) const
 {
     return m_map.at(a_key).load();
 }
+
+size_t Variables::size() const noexcept
+{
+    return m_items;
+}
+
 
 } // namespace fgear
