@@ -97,7 +97,6 @@ void TelnetMediator::update_map(std::string const& a_message, ssize_t a_len)
         name.clear();
     }
     ++a_len;
-
 }
 
 } // namespace fgear
