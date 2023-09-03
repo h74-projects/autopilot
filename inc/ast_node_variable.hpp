@@ -10,7 +10,7 @@ namespace fgear {
 
 class VariableNode : public ASTNode {
 public:
-    explicit VariableNode(std::shared_ptr<Environment>&& a_env, std::string const& a_name, std::string const& a_property);
+    explicit VariableNode(std::shared_ptr<Environment> a_env, std::string const& a_name, std::string const& a_property);
     ~VariableNode() = default;
 
     std::string name() const;
