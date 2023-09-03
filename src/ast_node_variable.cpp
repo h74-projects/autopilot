@@ -6,7 +6,6 @@ VariableNode::VariableNode(std::string const& a_name, std::string const& a_prope
 : m_name(a_name)
 , m_property(a_property) 
 {
-
 }
 
 std::string VariableNode::name() const 
