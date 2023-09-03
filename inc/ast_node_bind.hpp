@@ -2,6 +2,7 @@
 #define AST_NODE_BIND_HPP
 
 #include "ast_node.hpp"
+#include "variables_environment.hpp"
 
 #include <string> // std string
 
@@ -11,6 +12,7 @@ class BindNode : public ASTNode {
 public:
     //TODO: add a filename member maybe
     explicit BindNode(std::string const& a_name, std::string const& a_property);
+    ~BindNode() = default;
 
     std::string name() const;
     std::string property() const;

@@ -10,6 +10,7 @@ namespace fgear {
 class PrintNode : public ASTNode {
 public:
     explicit PrintNode(const std::string& text);
+    ~PrintNode() = default;
 
     std::string text() const;
 

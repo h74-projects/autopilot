@@ -1,9 +1,8 @@
 #ifndef AST_NODE_HPP
 #define AST_NODE_HPP
 
-#include <string> // std::string
-#include <vector> // vector
-#include <memory> // unique ptr
+
+
 
 namespace fgear {
 
