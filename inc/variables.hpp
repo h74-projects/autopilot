@@ -6,6 +6,8 @@
 #include <string> //std::string
 #include <atomic> // std::atomic<float>
 
+
+//TODO: load from file func
 namespace fgear {
 
 class Variables {
