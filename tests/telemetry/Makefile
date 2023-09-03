@@ -16,6 +16,10 @@ TARGET = utest
 
 LDLIBS = -lpthread -lPocoFoundation -lPocoNet -lpugixml -L/usr/local/lib
 
+VALGRIND = valgrind
+
+VFLAGS= --leak-check=full --track-origins=yes -s
+
 all: $(TARGET)
 
 check: $(TARGET)
@@ -40,6 +44,13 @@ lib:
 utest.o: $(INCLUDES_DIR)/mu_test.h
 
 .PHONY: all check recheck clang_check clean
+
+valgrind:
+	$(VALGRIND) $(VFLAGS) ./utest
+
+hell:
+	valgrind --tool=helgrind -s ./$(TARGET) 2> hell.log
+
 
 #dependencies
 $(SOURCES_DIR)/telemetry.o: $(INCLUDES_DIR)/telemetry.hpp
