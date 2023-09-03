@@ -19,5 +19,9 @@ std::string VariableNode::property() const
     return m_property;
 }
 
+void VariableNode::operator()()
+{
+    m_env.get()->insert(m_name, std::stof(m_property));
+}
 
 } // namespace fgear
