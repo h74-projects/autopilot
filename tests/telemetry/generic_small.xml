@@ -4,223 +4,221 @@
   <output>
    <line_separator>newline</line_separator>
    <var_separator>,</var_separator>
-
-	
 	<chunk>
     	<node>/instrumentation/airspeed-indicator/indicated-speed-kt</node>
     	<name>airspeed-indicator_indicated-speed-kt</name>
 		<type>float</type>
-		<format>airspeed-indicator_indicated-speed-kt:%f</format>
+		<format>/instrumentation/airspeed-indicator/indicated-speed-kt:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/sim/time/warp</node>
     	<name>time_warp</name>
 		<type>float</type>
-		<format>time_warp:%f</format>
+		<format>/sim/time/warp:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/switches/magnetos</node>
 	    <name>switches_magnetos</name>
 		<type>float</type>
-		<format>switches_magnetos:%f</format>
+		<format>/controls/switches/magnetos:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/heading-indicator/offset-deg</node>
 	    <name>heading-indicator_offset-deg</name>
 		<type>float</type>
-		<format>heading-indicator_offset-deg:%f</format>
+		<format>/instrumentation/heading-indicator/offset-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/altimeter/indicated-altitude-ft</node>
 	    <name>altimeter_indicated-altitude-ft</name>
 		<type>float</type>
-		<format>altimeter_indicated-altitude-ft:%f</format>
+		<format>/instrumentation/altimeter/indicated-altitude-ft:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/altimeter/pressure-alt-ft</node>
 	    <name>altimeter_pressure-alt-ft</name>
 		<type>float</type>
-		<format>altimeter_pressure-alt-ft:%f</format>
+		<format>/instrumentation/altimeter/pressure-alt-ft:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/attitude-indicator/indicated-pitch-deg</node>
 	    <name>attitude-indicator_indicated-pitch-deg</name>
 		<type>float</type>
-		<format>attitude-indicator_indicated-pitch-deg:%f</format>
+		<format>/instrumentation/attitude-indicator/indicated-pitch-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/attitude-indicator/indicated-roll-deg</node>
 	    <name>attitude-indicator_indicated-roll-deg</name>
 		<type>float</type>
-		<format>attitude-indicator_indicated-roll-deg:%f</format>
+		<format>/instrumentation/attitude-indicator/indicated-roll-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/attitude-indicator/internal-pitch-deg</node>
 	    <name>attitude-indicator_internal-pitch-deg</name>
 		<type>float</type>
-		<format>attitude-indicator_internal-pitch-deg:%f</format>
+		<format>/instrumentation/attitude-indicator/internal-pitch-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/attitude-indicator/internal-roll-deg</node>
 	    <name>attitude-indicator_internal-roll-deg</name>
 		<type>float</type>
-		<format>attitude-indicator_internal-roll-deg:%f</format>
+		<format>/instrumentation/attitude-indicator/internal-roll-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/encoder/indicated-altitude-ft</node>
 	    <name>encoder_indicated-altitude-ft</name>
 		<type>float</type>
-		<format>encoder_indicated-altitude-ft:%f</format>
+		<format>/instrumentation/encoder/indicated-altitude-ft:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/encoder/pressure-alt-ft</node>
 	    <name>encoder_pressure-alt-ft</name>
 		<type>float</type>
-		<format>encoder_pressure-alt-ft:%f</format>
+		<format>/instrumentation/encoder/pressure-alt-ft:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/gps/indicated-altitude-ft</node>
 	    <name>gps_indicated-altitude-ft</name>
 		<type>float</type>
-		<format>gps_indicated-altitude-ft:%f</format>
+		<format>/instrumentation/gps/indicated-altitude-ft:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/gps/indicated-ground-speed-kt</node>
 	    <name>gps_indicated-ground-speed-kt</name>
 		<type>float</type>
-		<format>gps_indicated-ground-speed-kt:%f</format>
+		<format>/instrumentation/gps/indicated-ground-speed-kt:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/gps/indicated-vertical-speed</node>
 	    <name>gps_indicated-vertical-speed</name>
 		<type>float</type>
-		<format>gps_indicated-vertical-speed:%f</format>
+		<format>/instrumentation/gps/indicated-vertical-speed:%f</format>
 		</chunk>
 	<chunk>
 	    <node>/instrumentation/heading-indicator/indicated-heading-deg</node>
 	    <name>indicated-heading-deg</name>
 		<type>float</type>
-		<format>indicated-heading-deg:%f</format>
+		<format>/instrumentation/heading-indicator/indicated-heading-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/magnetic-compass/indicated-heading-deg</node>
 	    <name>magnetic-compass_indicated-heading-deg</name>
 		<type>float</type>
-		<format>magnetic-compass_indicated-heading-deg:%f</format>
+		<format>/instrumentation/magnetic-compass/indicated-heading-deg:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/slip-skid-ball/indicated-slip-skid</node>
 	    <name>slip-skid-ball_indicated-slip-skid</name>
 		<type>float</type>
-		<format>slip-skid-ball_indicated-slip-skid:%f</format>
+		<format>/instrumentation/slip-skid-ball/indicated-slip-skid:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/turn-indicator/indicated-turn-rate</node>
 	    <name>turn-indicator_indicated-turn-rate</name>
 		<type>float</type>
-		<format>turn-indicator_indicated-turn-rate:%f</format>
+		<format>/instrumentation/turn-indicator/indicated-turn-rate:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/instrumentation/vertical-speed-indicator/indicated-speed-fpm</node>
 	    <name>vertical-speed-indicator_indicated-speed-fpm</name>
 		<type>float</type>
-		<format>vertical-speed-indicator_indicated-speed-fpm:%f</format>
+		<format>/instrumentation/vertical-speed-indicator/indicated-speed-fpm:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/flight/aileron</node>
 	    <name>flight_aileron</name>
 		<type>float</type>
-		<format>flight_aileron:%f</format>
+		<format>/controls/flight/aileron:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/flight/elevator</node>
 	    <name>flight_elevator</name>
 		<type>float</type>
-		<format>flight_elevator:%f</format>
+		<format>/controls/flight/elevator:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/flight/rudder</node>
 	    <name>flight_rudder</name>
 		<type>float</type>
-		<format>flight_rudder:%f</format>
+		<format>/controls/flight/rudder:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/flight/flaps</node>
 	    <name>flight_flaps</name>
 		<type>float</type>
-		<format>flight_flaps:%f</format>
+		<format>/controls/flight/flaps:%f</format>
 	</chunk>
 	<chunk>
-	    <node>/controls/engines/engine/throttle</node>
+	    <node>/controls/engines/engine[0]/throttle</node>
 	    <name>engine_throttle</name>
 		<type>float</type>
-		<format>engine_throttle:%f</format>
+		<format>/controls/engines/engine[0]/throttle:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/engines/current-engine/throttle</node>
 		<name>current-engine_throttle</name>
 		<type>float</type>
-		<format>current-engine_throttle:%f</format>
+		<format>/controls/engines/current-engine/throttle:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/switches/master-avionics</node>
 	    <name>switches_master-avionics</name>
 		<type>float</type>
-		<format>switches_master-avionics:%f</format>
+		<format>/controls/switches/master-avionics:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/switches/starter</node>
 	    <name>switches_starter</name>
 		<type>float</type>
-		<format>switches_starter:%f</format>
+		<format>/controls/switches/starter:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/engines/active-engine/auto-start</node>
 	    <name>active-engine_auto-start</name>
 		<type>float</type>
-		<format>active-engine_auto-start:%f</format>
+		<format>/engines/active-engine/auto-start:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/flight/speedbrake</node>
 	    <name>flight_speedbrake</name>
 		<type>float</type>
-		<format>flight_speedbrake:%f</format>
+		<format>/controls/flight/speedbrake:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/sim/model/c172p/brake-parking</node>
 	    <name>c172p_brake-parking</name>
 		<type>float</type>
-		<format>c172p_brake-parking:%f</format>
+		<format>/sim/model/c172p/brake-parking:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/engines/engine/primer</node>
 	    <name>engine_primer</name>
 		<type>float</type>
-		<format>engine_primer:%f</format>
+		<format>/controls/engines/engine/primer:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/engines/current-engine/mixture</node>
 	    <name>current-engine_mixture</name>
 		<type>float</type>
-		<format>current-engine_mixture:%f</format>
+		<format>/controls/engines/current-engine/mixture:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/switches/master-bat</node>
 	    <name>switches_master-bat</name>
 		<type>float</type>
-		<format>switches_master-bat:%f</format>
+		<format>/controls/switches/master-bat:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/controls/switches/master-alt</node>
 	    <name>switches_master-alt</name>
 		<type>float</type>
-		<format>switches_master-alt:%f</format>
+		<format>/controls/switches/master-alt:%f</format>
 	</chunk>
 	<chunk>
 	    <node>/engines/engine/rpm</node>
 	    <name>engine_rpm</name>
 		<type>float</type>
-		<format>engine_rpm:%f}</format>
+		<format>/engines/engine/rpm:%f</format>
 	</chunk>
 		
 </output>

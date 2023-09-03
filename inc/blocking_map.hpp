@@ -14,7 +14,8 @@ public:
     BlockingMap() = default;
     ~BlockingMap() = default;
 
-    BlockingMap(BlockingMap const& a_map);
+    BlockingMap(BlockingMap const&) = delete;
+    BlockingMap operator=(BlockingMap const&) = delete;
 
     BlockingMap(BlockingMap&&) = delete;
     BlockingMap operator=(BlockingMap&&) = delete;
@@ -24,17 +25,16 @@ public:
 
     V& operator[](K const& a_key);
 
-    //TODO: maybe
-    V read(K const& a_key) const;
-
     bool contains(K const& a_key) const noexcept;
+
+    void print() const;
 
 private:
     std::unordered_map<K, V> m_map;
     //TODO: decide if necessary
     //std::condition_variable m_cv;
     
-    std::mutex m_mtx;
+    mutable std::mutex m_mtx;
 };
 
 } // namespace concurrency

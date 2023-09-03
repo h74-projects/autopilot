@@ -1,5 +1,5 @@
 { 
-    "airspeed-indicator_indicated-speed-kt": {
+    "/instrumentation/airspeed-indicator/indicated-speed-kt": {
     	"node": "/instrumentation/airspeed-indicator/indicated-speed-kt",
     	"name": "airspeed-indicator_indicated-speed-kt",
 		"type": "float",
@@ -7,7 +7,7 @@
     },
 
 
-    "/sim/time/warp</": {
+    "/sim/time/warp/": {
     	"node": "/sim/time/warp",
     	"name": "time_warp",
 		"type": "float",
@@ -23,7 +23,7 @@
 
 	"/instrumentation/heading-indicator/offset-deg": {
     	"node": "/instrumentation/heading-indicator/offset-deg",
-    	"name": "heading-indicator_offset",
+    	"name": "heading-indicator_offset-deg",
 		"type": "float",
 		"format": "%f"
     },
@@ -172,7 +172,7 @@
     },
 
 	"/controls/engines/engine/throttle": {
-    	"node": "/controls/engines/engine/throttle",
+    	"node": "/controls/engines/engine[0]/throttle",
     	"name": "engine_throttle",
 		"type": "float",
 		"format": "%f"
@@ -256,4 +256,6 @@
 		"format": "%f"
     }
 
-}	
+	
+
+}
