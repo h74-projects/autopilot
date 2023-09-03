@@ -27,5 +27,14 @@ float Environment::get(std::string const& a_key) const
     return m_local.get(a_key);    
 }
 
+void Environment::insert(std::string const& a_key, float const& a_value)
+{
+    if (not m_local.contains(a_key)) {
+        m_local.insert(a_key, a_value);
+    }
+
+    throw std::invalid_argument("variable already exists");
+}
+
 
 } // namespace fgear
