@@ -27,6 +27,8 @@ public:
 
     size_t size() const noexcept;
 
+    bool contains(std::string const& a_key) const;
+
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;
     size_t m_items = 0;
