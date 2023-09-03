@@ -3,15 +3,19 @@
 
 #include "ast_node.hpp"
 
+#include <string> // std string
+
 namespace fgear {
 
 class BindNode : public ASTNode {
 public:
-    BindNode(std::string const& a_name, std::string const& a_property);
+    //TODO: add a filename member maybe
+    explicit BindNode(std::string const& a_name, std::string const& a_property);
 
     std::string name() const;
     std::string property() const;
 
+    //TODO: will write to xml file
     void operator()() override;
 
 private:

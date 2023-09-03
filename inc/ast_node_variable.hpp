@@ -3,15 +3,19 @@
 
 #include "ast_node.hpp"
 
+#include <string> // std string
+
 namespace fgear {
 
 class VariableNode : public ASTNode {
 public:
-    VariableNode(std::string const& a_name, std::string const& a_property);
+    explicit VariableNode(std::string const& a_name, std::string const& a_property);
+    ~VariableNode() = default;
 
     std::string name() const;
     std::string property() const;
 
+    //TODO: make to number through member
     void operator()() override;
 
 private:
