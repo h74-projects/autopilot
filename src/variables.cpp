@@ -50,5 +50,10 @@ size_t Variables::size() const noexcept
     return m_items;
 }
 
+bool Variables::contains(std::string const& a_key) const
+{
+    return m_map.contains(a_key);
+}
+
 
 } // namespace fgear

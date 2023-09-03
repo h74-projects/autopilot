@@ -6,6 +6,8 @@
 #include <string> //std::string
 #include <atomic> // std::atomic<float>
 
+
+//TODO: load from file func
 namespace fgear {
 
 class Variables {
@@ -26,6 +28,8 @@ public:
     float get(std::string const& a_key) const;
 
     size_t size() const noexcept;
+
+    bool contains(std::string const& a_key) const;
 
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;

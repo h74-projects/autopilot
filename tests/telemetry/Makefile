@@ -11,7 +11,9 @@ SOURCES_DIR = ../../src
 
 LDFLAGS= -I/usr/local/include/Poco
 
-OBJS = utest.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o
+OBJS = utest.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o\
+ $(SOURCES_DIR)/variables_environment.o
+
 TARGET = utest
 
 LDLIBS = -lpthread -lPocoFoundation -lPocoNet -lpugixml -L/usr/local/lib
@@ -64,3 +66,5 @@ $(SOURCES_DIR)/variables.o: $(INCLUDES_DIR)/variables.hpp $(INCLUDES_DIR)/blocki
 $(SOURCES_DIR)/client_telnet.o: $(INCLUDES_DIR)/client.hpp $(INCLUDES_DIR)/client_telnet.hpp
 
 $(SOURCES_DIR)/middle_man.o: $(INCLUDES_DIR)/middle_man.hpp $(INCLUDES_DIR)/blocking_map.hpp
+
+$(SOURCES_DIR)/variables_environment.o: $(INCLUDES_DIR)/variables_environment.hpp
