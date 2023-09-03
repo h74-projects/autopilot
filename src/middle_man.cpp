@@ -35,17 +35,13 @@ void MiddleMan::handle_messages()
         if (not m_messages.empty() && elapsed >= m_frequency) {
             std::string message;
             m_messages.dequeue(message);
-            
             if (not m_client.get()->send(message)) {
                 throw std::runtime_error("could not send message");
             }
             
             m_elapsed = std::chrono::steady_clock::now();
-
-            if (not m_messages.empty()) {
-                std::chrono::milliseconds timespan(m_frequency);
-                std::this_thread::sleep_for(timespan);
-            }
+            std::chrono::milliseconds timespan(m_frequency);
+            std::this_thread::sleep_for(timespan);
         }
     }
 }
