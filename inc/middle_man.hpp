@@ -2,7 +2,7 @@
 #define MIDDLE_MAN_HPP
 
 #include "client.hpp"
-#include "blocking_queue.hxx"
+#include "blocking_queue.hpp"
 
 #include <string> // std string
 #include <memory> // unique ptr
