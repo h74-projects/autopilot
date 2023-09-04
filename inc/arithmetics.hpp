@@ -11,7 +11,7 @@ class Arithmetics {
 public:
     virtual ~Arithmetics() = default;
 
-    virtual std::unique_ptr<ASTNode> op(std::unique_ptr<ASTNode> const& a_left, std::unique_ptr<ASTNode> const& a_right) = 0;
+    virtual std::shared_ptr<ASTNode> op(std::unique_ptr<ASTNode> const& a_left, std::unique_ptr<ASTNode> const& a_right) = 0;
 
 protected:
     Arithmetics() = default;
