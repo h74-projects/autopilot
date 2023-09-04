@@ -8,4 +8,13 @@ ConditionNode::ConditionNode(std::function<bool(std::vector<std::unique_ptr<ASTN
 {
 }
 
+void ConditionNode::operator()()
+{
+}
+
+bool ConditionNode::condition()
+{
+    return m_condition(m_nodes);
+}
+
 } // namespace fgear
