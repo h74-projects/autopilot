@@ -12,12 +12,12 @@ IfNode::IfNode(std::unique_ptr<ConditionNode>&& a_cond, std::vector<std::unique_
 void IfNode::operator()()
 {
     if (m_condition.get()->condition()) {
-        for (size_t i = 0; i < m_if_body.size(); ++i) {
-            m_if_body.at(i).get()->operator()();
+        for (auto& it : m_if_body) {
+            it.get()->operator()();
         }   
     } else {
-        for (size_t i = 0; i < m_else_body.size(); ++i) {
-            m_else_body.at(i).get()->operator()();
+        for (auto& it : m_else_body) {
+            it.get()->operator()();
         }
     }
 }
