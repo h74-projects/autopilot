@@ -68,7 +68,7 @@ void Variables::load_file(std::string const& a_file)
         std::string node_path = node.child_value("node");
 
         if (!node_path.empty()) {
-            m_map[node_path] = float{};
+            insert(node_path, float{});
         }
     }
 }
