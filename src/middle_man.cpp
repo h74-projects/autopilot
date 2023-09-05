@@ -30,18 +30,12 @@ void MiddleMan::send_message(std::string const& a_message)
 void MiddleMan::handle_messages()
 {
     while (m_active) {
-        auto time = m_elapsed - std::chrono::steady_clock::now();
-        uint64_t elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(time).count();
-        if (not m_messages.empty() && elapsed >= m_frequency) {
+        if (not m_messages.empty()) {
             std::string message;
             m_messages.dequeue(message);
             if (not m_client.get()->send(message)) {
                 throw std::runtime_error("could not send message");
             }
-            
-            m_elapsed = std::chrono::steady_clock::now();
-            std::chrono::milliseconds timespan(m_frequency);
-            std::this_thread::sleep_for(timespan);
         }
     }
 }
