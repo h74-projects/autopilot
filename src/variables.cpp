@@ -1,4 +1,5 @@
 #include "variables.hpp"
+#include "pugixml.hpp" // for loading from file
 
 #include <exception> // exceptions
 #include <stdexcept> // std exceptions
@@ -54,6 +55,24 @@ bool Variables::contains(std::string const& a_key) const
 {
     return m_map.contains(a_key);
 }
+
+void Variables::load_file(std::string const& a_file)
+{
+    pugi::xml_document doc;
+    if (!doc.load_file(a_file.c_str())) {
+        throw std::runtime_error("failed to load");
+    }
+    
+    for (pugi::xpath_node chunk_node : doc.select_nodes("/PropertyList/generic/output/chunk")) {
+        pugi::xml_node node = chunk_node.node();
+        std::string node_path = node.child_value("node");
+
+        if (!node_path.empty()) {
+            m_map[node_path] = float{};
+        }
+    }
+}
+
 
 
 } // namespace fgear
