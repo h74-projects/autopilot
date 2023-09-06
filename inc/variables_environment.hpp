@@ -22,7 +22,8 @@ public:
     Environment& operator=(Environment&&) = delete;
 
     void set(std::string const& a_key, float const& a_value);
-
+    void insert(std::string const& a_key, float const& a_value);
+    
     float get(std::string const& a_key) const;
 
 private:

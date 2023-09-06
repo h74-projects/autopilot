@@ -31,6 +31,8 @@ public:
 
     bool contains(std::string const& a_key) const;
 
+    void load_file(std::string const& a_file);
+
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;
     size_t m_items = 0;

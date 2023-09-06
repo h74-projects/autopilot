@@ -30,7 +30,7 @@ bool TelnetClient::send(std::string const& a_message)
         return false;
     }
     m_socket.sendMessage(a_message);
-    //TODO: check if need to recieve answer
+    std::string answer = recieve();
     return true;
 }
 
