@@ -29,7 +29,7 @@ check: $(TARGET)
 	sudo rm /usr/share/games/flightgear/Protocol/generic_small.xml
 	sudo cp generic_small.xml /usr/share/games/flightgear/Protocol/generic_small.xml
 	@ gnome-terminal -- fgfs --telnet=foo,bar,200,foo,5401,bar --generic=socket,out,5,127.0.0.1,49002,udp,generic_small
-	sleep 60
+	sleep 30
 	@./$(TARGET) -v
 
 recheck: clean check
