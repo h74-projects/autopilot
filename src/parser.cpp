@@ -155,8 +155,8 @@ std::unique_ptr<WhileNode> Parser::parse_while(std::vector<Token> const& a_token
         } else {
             return nullptr;
         }
-        std::unique_ptr<ConditionNode> condition = std::make_unique<ConditionNode>(identifier_name , number ,symbol); 
-        return std::make_unique<WhileNode>(std::move(condition), std::move(loop_body));
+        // std::unique_ptr<ConditionNode> condition = std::make_unique<ConditionNode>(identifier_name , number ,symbol); 
+        // return std::make_unique<WhileNode>(std::move(condition), std::move(loop_body));
     }
     return nullptr;
 }
@@ -231,7 +231,7 @@ std::unique_ptr<IfNode> Parser::parse_if(std::vector<Token> const& a_tokens)
     if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::IF) {
         m_pos++;
 
-        std::unique_ptr<ArithmeticNode> condition = parse_arithmetic(a_tokens);
+        auto condition = parse_arithmetic(a_tokens);
 
         if (condition) {
             if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::COLON) {
@@ -271,7 +271,7 @@ std::unique_ptr<IfNode> Parser::parse_if(std::vector<Token> const& a_tokens)
                 if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::SYMBOL) {
                     m_pos++;
 
-                    return std::make_unique<IfNode>(std::move(condition), std::move(if_body), std::move(else_body));
+                    //return std::make_unique<IfNode>(std::move(condition), std::move(if_body), std::move(else_body));
                 } else {
                     return nullptr;
                 }
@@ -286,6 +286,7 @@ std::unique_ptr<IfNode> Parser::parse_if(std::vector<Token> const& a_tokens)
 
 std::unique_ptr<AssignmentNode> Parser::parse_assignment(std::vector<Token> const& a_tokens)
 {
+    Token current_token = a_tokens[m_pos];
     if (current_token.m_type == TokenType::IDENTIFIER) {
             std::string identifier_name = current_token.m_value;
             m_pos++;
@@ -294,10 +295,9 @@ std::unique_ptr<AssignmentNode> Parser::parse_assignment(std::vector<Token> cons
                 if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::NUMBER) {
                     m_pos++; 
                      std::string number = current_token.m_value;
-                     return std::make_unique<AssignmentNode>(identifier_name , number);
+                     return std::make_unique<AssignmentNode>(identifier_name , std::atof(number.c_str()));
                 } 
             }
-            return assignment_node;
         }
 
     return nullptr;
