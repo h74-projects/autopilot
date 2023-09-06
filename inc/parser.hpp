@@ -6,10 +6,12 @@
 #include <iostream> 
 #include <memory>
 
-#include "lexer.hpp"
 #include "ast_node.hpp"
+#include "lexer.hpp"
+#include "ast_names.hpp"
 
-namespace fg {
+
+namespace fgear {
 class Parser {
 public:
     explicit Parser(std::string const& a_script_code);
