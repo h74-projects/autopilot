@@ -15,8 +15,6 @@ public:
     //TODO: maybe make the op a shared pointer and use the freight thingy design pattern
     ArithmeticNode(std::unique_ptr<ASTNode>&& a_left, std::unique_ptr<Arithmetics>&& a_op, std::unique_ptr<ASTNode>&& a_right);
 
-    void operator()() override;
-
     void visit(Interpreter const& a_interpreter) override;
 
     std::shared_ptr<ASTNode> result();

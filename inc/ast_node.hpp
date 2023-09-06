@@ -11,7 +11,7 @@ class ASTNode {
 public:
     virtual ~ASTNode() = default;
 
-    virtual void visit(Interpreter const& a_interpreter) = 0;
+    virtual void visit(Interpreter& a_interpreter) = 0;
 
 protected:
     ASTNode() = default;
