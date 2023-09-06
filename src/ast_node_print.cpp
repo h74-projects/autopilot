@@ -14,7 +14,7 @@ std::string PrintNode::text() const
     return m_text;
 }
 
-void PrintNode::operator()()
+void PrintNode::visit(Interpreter& a_interpreter)
 {
     std::cout << m_text;
 }

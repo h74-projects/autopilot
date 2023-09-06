@@ -8,7 +8,7 @@ AssignmentNode::AssignmentNode(const std::string& a_identifier, float const& a_v
 {
 }
 
-void AssignmentNode::visit(Interpreter const& a_interpreter)
+void AssignmentNode::visit(Interpreter& a_interpreter)
 {
     a_interpreter.m_environment.get()->set(m_identifier, m_value);
 }

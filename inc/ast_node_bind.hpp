@@ -17,7 +17,7 @@ public:
     std::string name() const;
     std::string property() const;
 
-    void visit(Interpreter const& a_interpreter) override;
+    void visit(Interpreter& a_interpreter) override;
 
 private:
     std::string m_name;

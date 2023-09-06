@@ -19,7 +19,7 @@ public:
     
     ~IfNode() = default;
 
-    void operator()() override;
+    void visit(Interpreter& a_interpreter) override;
 
 
 private:
