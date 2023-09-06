@@ -16,7 +16,7 @@ public:
         return std::stoi(m_time);
     }
 
-    void visit(Interpreter const& a_interpreter) override;
+    void visit(Interpreter& a_interpreter) override;
 
 private:
     std::string m_time;

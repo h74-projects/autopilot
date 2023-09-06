@@ -46,11 +46,11 @@ std::unique_ptr<ASTNode> Parser::parse_statement(std::vector<Token> const& a_tok
             return parse_while(a_tokens);
 
         } else if(current_token.m_type == TokenType::IF) {
-            m_pos++; 
             return parse_if(a_tokens);
+        
+        } else if(current_token.m_type == TokenType::IDENTIFIER) {
+            return parse_assignment(a_tokens);
         }
-
-
 
         //TODO handle other types of statements here
     }
@@ -284,23 +284,28 @@ std::unique_ptr<IfNode> Parser::parse_if(std::vector<Token> const& a_tokens)
     return nullptr;
 }
 
+std::unique_ptr<AssignmentNode> Parser::parse_assignment(std::vector<Token> const& a_tokens)
+{
+    if (current_token.m_type == TokenType::IDENTIFIER) {
+            std::string identifier_name = current_token.m_value;
+            m_pos++;
+            if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::ASSIGNMENT) {
+                m_pos++; 
+                if (m_pos < a_tokens.size() && a_tokens[m_pos].m_type == TokenType::NUMBER) {
+                    m_pos++; 
+                     std::string number = current_token.m_value;
+                     return std::make_unique<AssignmentNode>(identifier_name , number);
+                } 
+            }
+            return assignment_node;
+        }
+
+    return nullptr;
+}
+
 }// namespace fg
 
-// std::unique_ptr<AssignmentNode> Parser::parse_assignment() 
-// {
-//     std::string identifier = get_command_from_script();
-//     if (identifier.empty() || get_command_from_script() != "=") {
-//         // Handle error: Invalid assignment
-//         return nullptr;
-//     }
 
-//     auto expression = parse_arithmetic(); 
-//     if (!expression) {
-//         return nullptr;
-//     }
-
-//     return std::make_unique<AssignmentNode>(identifier, std::move(expression));
-// }
 
 
 

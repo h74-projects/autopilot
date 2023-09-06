@@ -13,7 +13,7 @@ int SleepNode::time() const
     return std::stoi(m_time);
 }
 
-void SleepNode::visit(Interpreter const& a_interpreter)
+void SleepNode::visit(Interpreter& a_interpreter)
 {
     ::usleep(std::stoi(m_time));
 }

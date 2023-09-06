@@ -14,8 +14,7 @@ public:
 
     std::string text() const;
 
-    //TODO: prints to console
-    void operator()() override;
+    void visit(Interpreter& a_interpreter) override;
 
 private:
     std::string m_text;

@@ -10,7 +10,8 @@ ArithmeticNode::ArithmeticNode(std::unique_ptr<ASTNode>&& a_left, std::unique_pt
 {
 }
 
-void ArithmeticNode::visit(Interpreter const& a_interpreter)
+
+void ArithmeticNode::visit(Interpreter& a_interpreter)
 {
     m_result = m_op.get()->op(m_left, m_right);
 }
