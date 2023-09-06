@@ -1,7 +1,7 @@
 #include "parser.hpp"
 #include <sstream>
 
-namespace fg {
+namespace fgear {
 
 Parser::Parser(std::string const& a_script_code)
 : m_script_code(a_script_code)

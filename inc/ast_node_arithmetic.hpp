@@ -17,6 +17,8 @@ public:
 
     void operator()() override;
 
+    void visit(Interpreter const& a_interpreter) override;
+
     std::shared_ptr<ASTNode> result();
 
 private:
