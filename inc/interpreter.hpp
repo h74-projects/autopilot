@@ -7,6 +7,8 @@
 #include "variables_environment.hpp"
 #include "parser.hpp"
 
+//courtsey of https://github.com/vivekbhadra/system_analyser/blob/main/SystemAnalyser/SystemAnalyser.h
+#include "SystemAnalyser.hpp"
 
 #include <string> // std string
 #include <vector> // vector
@@ -44,6 +46,7 @@ private:
     std::unique_ptr<Environment> m_environment;
     std::vector<std::unique_ptr<ASTNode>> m_program;
     pugi::xml_document m_doc;
+    util::SystemAnalyser m_analyser;
 };
 
 } // namespace fgear

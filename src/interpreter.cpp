@@ -8,6 +8,7 @@ Interpreter::Interpreter(std::string const& a_file_name, std::unique_ptr<Environ
 {
     create_xml();
     m_program = m_parser.parse();
+    m_analyser.RunCommand("sudo rm /usr/share/games/flightgear/Protocol/generic_small.xml");
 }
 
 void Interpreter::accept(std::unique_ptr<ASTNode> const& a_node)
@@ -49,7 +50,7 @@ void Interpreter::bind_all()
 
 void Interpreter::send_generic_protocol()
 {
-    
+    m_analyser.RunCommand("sudo cp generic_small.xml /usr/share/games/flightgear/Protocol/generic_small.xml");
 }
 
 } // namespace fgear
