@@ -1,5 +1,6 @@
 #include "ast_node_bind.hpp"
 #include "pugixml.hpp" // xml_nodes
+#include "interpreter.hpp"
 
 namespace fgear {
 

@@ -1,4 +1,5 @@
 #include "ast_node_assignment.hpp"
+#include "interpreter.hpp"
 
 namespace fgear {
 

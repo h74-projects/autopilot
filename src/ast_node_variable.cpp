@@ -1,10 +1,11 @@
 #include "ast_node_variable.hpp"
+#include "interpreter.hpp"
 
 namespace fgear {
 
 VariableNode::VariableNode(std::string const& a_name, std::string const& a_property)
-: m_name{a_name}
-, m_property{a_property}
+: m_property{a_property}
+, m_name{a_name}
 {
 }
 

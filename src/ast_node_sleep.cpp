@@ -1,4 +1,5 @@
 #include "ast_node_sleep.hpp"
+#include "interpreter.hpp"
 
 namespace fgear {
 
@@ -6,7 +7,6 @@ SleepNode::SleepNode(std::string const& a_time)
 : m_time(a_time) 
 { 
 }
-
 
 int SleepNode::time() const
 {
@@ -16,6 +16,7 @@ int SleepNode::time() const
 void SleepNode::visit(Interpreter& a_interpreter)
 {
     ::usleep(std::stoi(m_time));
+    a_interpreter.nothing();
 }
 
 } // namespace fgear

@@ -10,7 +10,6 @@
 #include "lexer.hpp"
 #include "ast_names.hpp"
 
-
 namespace fgear {
 class Parser {
 public:
@@ -36,5 +35,7 @@ private:
     std::size_t m_pos;
     Lexer m_lexer;
 };
-} // namespace fg
+
+} // namespace fgear
+
 #endif // PARSER_HPP

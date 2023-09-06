@@ -12,7 +12,9 @@ SOURCES_DIR = ../../src
 LDFLAGS= -I/usr/local/include/Poco
 
 OBJS = utest.o $(SOURCES_DIR)/SystemAnalyser.o $(SOURCES_DIR)/interpreter.o $(SOURCES_DIR)/parser.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o\
-$(SOURCES_DIR)/variables_environment.o $(SOURCES_DIR)/parser.o $(SOURCES_DIR)/lexer.o
+$(SOURCES_DIR)/variables_environment.o $(SOURCES_DIR)/parser.o $(SOURCES_DIR)/lexer.o\
+$(SOURCES_DIR)/ast_node_variable.o $(SOURCES_DIR)/ast_node_assignment.o $(SOURCES_DIR)/ast_node_bind.o\
+$(SOURCES_DIR)/ast_node_sleep.o $(SOURCES_DIR)/ast_node_print.o
 
 TARGET = utest
 
@@ -72,3 +74,13 @@ $(SOURCES_DIR)/variables_environment.o: $(INCLUDES_DIR)/variables_environment.hp
 $(SOURCES_DIR)/parser.o: $(INCLUDES_DIR)/parser.hpp
 
 $(SOURCES_DIR)/lexer.o: $(INCLUDES_DIR)/lexer.hpp
+
+$(SOURCES_DIR)/ast_node_variable.o: $(INCLUDES_DIR)/ast_node_variable.hpp
+
+$(SOURCES_DIR)/ast_node_assignment.o: $(INCLUDES_DIR)/ast_node_assignment.hpp
+
+$(SOURCES_DIR)/ast_node_bind.o: $(INCLUDES_DIR)/ast_node_bind.hpp
+
+$(SOURCES_DIR)/ast_node_sleep.o: $(INCLUDES_DIR)/ast_node_sleep.hpp
+
+$(SOURCES_DIR)/ast_node_print.o: $(INCLUDES_DIR)/ast_node_print.hpp
