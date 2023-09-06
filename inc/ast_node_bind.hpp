@@ -20,6 +20,8 @@ public:
     //TODO: will write to xml file
     void operator()() override;
 
+    void visit(Interpreter const& a_interpreter) override;
+
 private:
     std::string m_name;
     std::string m_property;
