@@ -4,6 +4,8 @@
 #include "ast_node.hpp"
 #include "pugixml.hpp" // xml_doc
 #include "ast_names.hpp"
+#include "variables_environment.hpp"
+#include "parser.hpp"
 
 
 #include <string> // std string
@@ -14,11 +16,9 @@ namespace fgear {
 
 class Interpreter {
 public:
-    Interpreter();
+    Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment);
     ~Interpreter() = default;
-
-    void load_script(std::string const& a_file_name);
-
+    
     void run_script();
 
 private:
@@ -40,8 +40,8 @@ private:
     void send_generic_protocol();
 
 private:
-    //TODO: add parser member
-    //TODO: add environment
+    Parser m_parser;
+    std::unique_ptr<Environment> m_environment;
     std::vector<std::unique_ptr<ASTNode>> m_program;
     pugi::xml_document m_doc;
 };

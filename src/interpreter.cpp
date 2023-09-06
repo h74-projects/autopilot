@@ -4,9 +4,12 @@ namespace fgear {
 
 
 
-Interpreter::Interpreter()
+Interpreter::Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment)
+: m_parser{a_file_name}
+, m_environment{std::move(a_environment)}
 {
     create_xml();
+    m_program = m_parser.parse();
 }
 
 void Interpreter::create_xml()
