@@ -2,8 +2,6 @@
 
 namespace fgear {
 
-
-
 Interpreter::Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment)
 : m_parser{a_file_name}
 , m_environment{std::move(a_environment)}
@@ -11,6 +9,12 @@ Interpreter::Interpreter(std::string const& a_file_name, std::unique_ptr<Environ
     create_xml();
     m_program = m_parser.parse();
 }
+
+void Interpreter::accept(std::unique_ptr<ASTNode> const& a_node)
+{
+    a_node.get()->visit(*this);
+}
+
 
 void Interpreter::create_xml()
 {
@@ -25,6 +29,27 @@ void Interpreter::create_xml()
     separator.append_child(pugi::node_pcdata).set_value("newline");
     auto var_separator = output_root.append_child("var_separator");
     var_separator.append_child(pugi::node_pcdata).set_value(",");
+}
+
+void Interpreter::bind_all()
+{
+    auto begin = m_program.begin();
+    auto end = m_program.end();
+    while (begin != end) {
+        auto node = dynamic_cast<BindNode*>(begin->get());
+        if (not (node == nullptr)) {
+            accept(*begin);
+        }
+        ++begin;
+    }
+
+    m_doc.save_file("generic_small.xml");
+    send_generic_protocol();
+}
+
+void Interpreter::send_generic_protocol()
+{
+    
 }
 
 } // namespace fgear

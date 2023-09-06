@@ -16,9 +16,10 @@ namespace fgear {
 
 class Interpreter {
 public:
+    //TODO: build the environment
     Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment);
     ~Interpreter() = default;
-    
+
     void run_script();
 
 private:
@@ -32,12 +33,11 @@ private:
     friend VariableNode;
     friend SleepNode;
 
-    void create_xml();
-
-    void accept(std::unique_ptr<ASTNode> a_node);
+    void accept(std::unique_ptr<ASTNode> const& a_node);
 
     void bind_all();
     void send_generic_protocol();
+    void create_xml();
 
 private:
     Parser m_parser;
