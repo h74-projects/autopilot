@@ -2,6 +2,7 @@
 #define VARIABLES_HPP
 
 #include "blocking_map.hpp"
+#include "pugixml.hpp" // for loading
 
 #include <string> //std::string
 #include <atomic> // std::atomic<float>
@@ -32,6 +33,7 @@ public:
     bool contains(std::string const& a_key) const;
 
     void load_file(std::string const& a_file);
+    void load_file(pugi::xml_document const& a_doc);
 
 private:
     concurrency::BlockingMap<std::string, std::atomic<float>> m_map;

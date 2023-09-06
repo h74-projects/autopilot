@@ -1,4 +1,4 @@
-#presentation makefile
+#interpreter makefile
 
 CXX = g++
 CC = $(CXX)
@@ -11,8 +11,8 @@ SOURCES_DIR = ../../src
 
 LDFLAGS= -I/usr/local/include/Poco
 
-OBJS = utest.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o\
- $(SOURCES_DIR)/variables_environment.o
+OBJS = utest.o $(SOURCES_DIR)/SystemAnalyser.o $(SOURCES_DIR)/interpreter.o $(SOURCES_DIR)/parser.o $(SOURCES_DIR)/telemetry.o $(SOURCES_DIR)/protocol.o $(SOURCES_DIR)/server_udp.o $(SOURCES_DIR)/variables.o $(SOURCES_DIR)/client_telnet.o $(SOURCES_DIR)/middle_man.o\
+$(SOURCES_DIR)/variables_environment.o $(SOURCES_DIR)/parser.o $(SOURCES_DIR)/lexer.o
 
 TARGET = utest
 
@@ -25,11 +25,6 @@ VFLAGS= --leak-check=full --track-origins=yes -s
 all: $(TARGET)
 
 check: $(TARGET)
-#5401 is the port number! change accordingly in utest if changed here
-	sudo rm /usr/share/games/flightgear/Protocol/generic_small.xml
-	sudo cp generic_small.xml /usr/share/games/flightgear/Protocol/generic_small.xml
-	@ gnome-terminal -- fgfs --telnet=foo,bar,200,foo,5401,bar --generic=socket,out,5,127.0.0.1,49002,udp,generic_small
-	sleep 30
 	@./$(TARGET) -v
 
 recheck: clean check
@@ -55,6 +50,11 @@ hell:
 
 
 #dependencies
+
+$(SOURCES_DIR)/SystemAnalyser.o: $(INCLUDES_DIR)/SystemAnalyser.hpp
+
+$(SOURCES_DIR)/interpreter.o: $(INCLUDES_DIR)/interpreter.hpp $(INCLUDES_DIR)/ast_node.hpp $(INCLUDES_DIR)/ast_names.hpp
+
 $(SOURCES_DIR)/telemetry.o: $(INCLUDES_DIR)/telemetry.hpp
 
 $(SOURCES_DIR)/protocol.o: $(INCLUDES_DIR)/protocol.hpp
@@ -68,3 +68,7 @@ $(SOURCES_DIR)/client_telnet.o: $(INCLUDES_DIR)/client.hpp $(INCLUDES_DIR)/clien
 $(SOURCES_DIR)/middle_man.o: $(INCLUDES_DIR)/middle_man.hpp $(INCLUDES_DIR)/blocking_map.hpp
 
 $(SOURCES_DIR)/variables_environment.o: $(INCLUDES_DIR)/variables_environment.hpp
+
+$(SOURCES_DIR)/parser.o: $(INCLUDES_DIR)/parser.hpp
+
+$(SOURCES_DIR)/lexer.o: $(INCLUDES_DIR)/lexer.hpp

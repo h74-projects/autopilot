@@ -2,11 +2,16 @@
 
 namespace fgear {
 
-Environment::Environment(std::shared_ptr<Variables> a_binded, std::unique_ptr<MiddleMan>&& a_middle_man)
+Environment::Environment(std::unique_ptr<MiddleMan>&& a_middle_man)
 : m_middle_man{std::move(a_middle_man)}
-, m_bind{a_binded}
 {
 }
+
+void Environment::load_binded(std::shared_ptr<Variables> a_binded)
+{
+    m_bind = a_binded;
+}
+
 
 void Environment::set(std::string const& a_key, float const& a_value)
 {

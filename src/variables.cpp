@@ -1,5 +1,4 @@
 #include "variables.hpp"
-#include "pugixml.hpp" // for loading from file
 
 #include <exception> // exceptions
 #include <stdexcept> // std exceptions
@@ -73,6 +72,17 @@ void Variables::load_file(std::string const& a_file)
     }
 }
 
+void Variables::load_file(pugi::xml_document const& a_doc)
+{   
+    for (pugi::xpath_node chunk_node : a_doc.select_nodes("/PropertyList/generic/output/chunk")) {
+        pugi::xml_node node = chunk_node.node();
+        std::string node_path = node.child_value("node");
+
+        if (!node_path.empty()) {
+            insert(node_path, float{});
+        }
+    }
+}
 
 
 } // namespace fgear

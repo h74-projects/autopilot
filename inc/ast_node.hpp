@@ -1,11 +1,12 @@
 #ifndef AST_NODE_HPP
 #define AST_NODE_HPP
 
-#include "interpreter.hpp"
-
 #include <memory> //unique ptrs
 
+
 namespace fgear {
+
+class Interpreter;
 
 class ASTNode {
 public:

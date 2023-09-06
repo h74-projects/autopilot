@@ -12,7 +12,7 @@ namespace fgear {
 
 class Environment {
 public:
-    explicit Environment(std::shared_ptr<Variables> a_binded, std::unique_ptr<MiddleMan>&& a_middle_man);
+    explicit Environment(std::unique_ptr<MiddleMan>&& a_middle_man);
     ~Environment() = default;
 
     Environment(Environment const&) = delete;
@@ -20,6 +20,8 @@ public:
 
     Environment& operator=(Environment const&) = delete;
     Environment& operator=(Environment&&) = delete;
+
+    void load_binded(std::shared_ptr<Variables> a_binded);
 
     void set(std::string const& a_key, float const& a_value);
     void insert(std::string const& a_key, float const& a_value);

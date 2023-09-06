@@ -7,6 +7,8 @@
 #include "variables_environment.hpp"
 #include "parser.hpp"
 
+//courtsey of https://github.com/vivekbhadra/system_analyser/blob/main/SystemAnalyser/SystemAnalyser.h
+#include "SystemAnalyser.hpp"
 
 #include <string> // std string
 #include <vector> // vector
@@ -16,10 +18,13 @@ namespace fgear {
 
 class Interpreter {
 public:
+    //TODO: build the environment
     Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment);
     ~Interpreter() = default;
-    
-    void run_script();
+
+    std::shared_ptr<Variables> get_binded();
+
+    void run();
 
 private:
     friend ASTNode;
@@ -32,18 +37,19 @@ private:
     friend VariableNode;
     friend SleepNode;
 
-    void create_xml();
-
-    void accept(std::unique_ptr<ASTNode> a_node);
+    void accept(std::unique_ptr<ASTNode> const& a_node);
 
     void bind_all();
     void send_generic_protocol();
+    void create_xml();
 
 private:
     Parser m_parser;
     std::unique_ptr<Environment> m_environment;
     std::vector<std::unique_ptr<ASTNode>> m_program;
     pugi::xml_document m_doc;
+    util::SystemAnalyser m_analyser;
+    std::shared_ptr<Variables> m_variables;
 };
 
 } // namespace fgear
