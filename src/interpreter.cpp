@@ -9,12 +9,23 @@ Interpreter::Interpreter(std::string const& a_file_name, std::unique_ptr<Environ
     create_xml();
     m_program = m_parser.parse();
     m_analyser.RunCommand("sudo rm /usr/share/games/flightgear/Protocol/generic_small.xml");
+    bind_all();
+    m_variables = std::make_shared<Variables>();
+    m_variables.get()->load_file(m_doc);
+    m_environment.get()->load_binded(m_variables);
 }
+
+std::shared_ptr<Variables> Interpreter::get_binded()
+{
+    return m_variables;
+}
+
 
 void Interpreter::accept(std::unique_ptr<ASTNode> const& a_node)
 {
     a_node.get()->visit(*this);
 }
+
 
 
 void Interpreter::create_xml()
@@ -44,7 +55,6 @@ void Interpreter::bind_all()
         }
         ++begin;
     }
-
     m_doc.save_file("generic_small.xml");
     send_generic_protocol();
 }

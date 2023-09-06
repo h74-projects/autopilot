@@ -22,6 +22,8 @@ public:
     Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment);
     ~Interpreter() = default;
 
+    std::shared_ptr<Variables> get_binded();
+
     void run();
 
 private:
@@ -47,6 +49,7 @@ private:
     std::vector<std::unique_ptr<ASTNode>> m_program;
     pugi::xml_document m_doc;
     util::SystemAnalyser m_analyser;
+    std::shared_ptr<Variables> m_variables;
 };
 
 } // namespace fgear
