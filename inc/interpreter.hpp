@@ -22,7 +22,7 @@ public:
     Interpreter(std::string const& a_file_name, std::unique_ptr<Environment>&& a_environment);
     ~Interpreter() = default;
 
-    void run_script();
+    void run();
 
 private:
     friend ASTNode;

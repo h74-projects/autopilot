@@ -37,6 +37,7 @@ void Interpreter::bind_all()
     auto begin = m_program.begin();
     auto end = m_program.end();
     while (begin != end) {
+        //TODO: remove all bind nodes from vector!
         auto node = dynamic_cast<BindNode*>(begin->get());
         if (not (node == nullptr)) {
             accept(*begin);
@@ -51,6 +52,19 @@ void Interpreter::bind_all()
 void Interpreter::send_generic_protocol()
 {
     m_analyser.RunCommand("sudo cp generic_small.xml /usr/share/games/flightgear/Protocol/generic_small.xml");
+}
+
+void Interpreter::run()
+{
+    auto begin = m_program.begin();
+    auto end = m_program.end();
+    while (begin != end) {
+        auto node = dynamic_cast<BindNode*>(begin->get());
+        if (node == nullptr) {
+            accept(*begin);
+        }
+        ++begin;
+    }    
 }
 
 } // namespace fgear
