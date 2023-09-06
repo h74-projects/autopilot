@@ -11,4 +11,10 @@
 #include "ast_node_variable.hpp"
 #include "ast_node_while.hpp"
 
+namespace fgear {
+
+class Interpreter;
+
+} // namespace fgear
+
 #endif // AST_NAMES_HPP
