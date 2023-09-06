@@ -11,9 +11,6 @@ class ASTNode {
 public:
     virtual ~ASTNode() = default;
 
-    //TODO: think if we want a return value
-    virtual void operator()() = 0;
-
     virtual void visit(Interpreter const& a_interpreter) = 0;
 
 protected:

@@ -17,9 +17,6 @@ public:
     std::string name() const;
     std::string property() const;
 
-    //TODO: will write to xml file
-    void operator()() override;
-
     void visit(Interpreter const& a_interpreter) override;
 
 private:
