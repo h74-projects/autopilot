@@ -15,6 +15,10 @@ void ArithmeticNode::operator()()
     m_result = m_op.get()->op(m_left, m_right);
 }
 
+void ArithmeticNode::visit(Interpreter const& a_interpreter)
+{
+}
+
 std::shared_ptr<ASTNode> ArithmeticNode::result()
 {
     if (m_result.get() == nullptr) {
