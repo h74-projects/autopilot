@@ -16,7 +16,7 @@ public:
     explicit ConditionNode(std::function<bool(std::vector<std::unique_ptr<ASTNode>> const&)> const& a_condition, std::vector<std::unique_ptr<ASTNode>>&& a_nodes);
     ~ConditionNode() = default;
 
-    void operator()() override;
+    void visit(Interpreter& a_interpreter) override;
 
     bool condition();
 

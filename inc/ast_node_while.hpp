@@ -13,8 +13,7 @@ class WhileNode : public ASTNode {
 public:
     WhileNode(std::unique_ptr<ConditionNode> a_cond, std::vector<std::unique_ptr<ASTNode>> a_body);
 
-    void operator()() override;
-
+    void visit(Interpreter& a_interpreter) override;
 private:
     std::unique_ptr<ConditionNode> m_condition;
     std::vector<std::unique_ptr<ASTNode>> m_loop_body;

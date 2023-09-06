@@ -16,8 +16,7 @@ public:
     std::string name() const;
     std::string property() const;
 
-    //TODO: make to number through member
-    void operator()() override;
+    void visit(Interpreter& a_interpreter) override;
 
 private:
     std::string m_property;

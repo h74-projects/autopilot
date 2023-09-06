@@ -9,7 +9,7 @@ BindNode::BindNode(std::string const& a_name, std::string const& a_property)
 {
 }
 
-void BindNode::visit(Interpreter const& a_interpreter)
+void BindNode::visit(Interpreter& a_interpreter)
 {
     pugi::xml_node root = a_interpreter.m_doc.child("PropertyList").child("generic").child("output");
     pugi::xml_node node = root.append_child("chunk");

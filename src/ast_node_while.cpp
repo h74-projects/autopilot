@@ -8,11 +8,11 @@ WhileNode::WhileNode(std::unique_ptr<ConditionNode> a_cond, std::vector<std::uni
 {
 }
 
-void WhileNode::operator()()
+void WhileNode::visit(Interpreter& a_interpreter)
 {
     while (m_condition.get()->condition()) {
         for (auto& it : m_loop_body) {
-            it.get()->operator()();
+            it.get()->visit();
         }
     }
 }
