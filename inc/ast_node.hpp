@@ -1,9 +1,6 @@
 #ifndef AST_NODE_HPP
 #define AST_NODE_HPP
 
-
-
-
 namespace fgear {
 
 class ASTNode {

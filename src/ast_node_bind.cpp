@@ -18,5 +18,6 @@ std::string BindNode::property() const
     return m_property;
 }
 
+//TODO: check how to add to xml file
 
 } // namespace fgear
