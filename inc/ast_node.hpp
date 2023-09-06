@@ -3,7 +3,6 @@
 
 #include <memory> //unique ptrs
 
-
 namespace fgear {
 
 class Interpreter;

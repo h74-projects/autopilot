@@ -11,10 +11,7 @@ class SleepNode : public ASTNode {
 public:
     SleepNode(std::string const& a_time);
 
-    int time() const
-    {
-        return std::stoi(m_time);
-    }
+    int time() const;
 
     void visit(Interpreter& a_interpreter) override;
 

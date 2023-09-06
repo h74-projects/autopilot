@@ -43,6 +43,8 @@ private:
     void send_generic_protocol();
     void create_xml();
 
+    void nothing() {};
+
 private:
     Parser m_parser;
     std::unique_ptr<Environment> m_environment;

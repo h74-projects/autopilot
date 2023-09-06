@@ -1,4 +1,5 @@
 #include "ast_node_print.hpp"
+#include "interpreter.hpp"
 
 #include <iostream> // cout
 
@@ -17,6 +18,7 @@ std::string PrintNode::text() const
 void PrintNode::visit(Interpreter& a_interpreter)
 {
     std::cout << m_text;
+    a_interpreter.nothing();
 }
 
 } // namespace fgear
